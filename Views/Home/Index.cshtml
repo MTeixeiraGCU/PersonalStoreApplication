@@ -20,18 +20,22 @@
 
             <div class="carousel-item active">
 
-                <!-- Loop here for each product of this type every three needs to create a new card-group-->
-                <div class="card-group">
-                    @foreach(var item in Model)
+                <!-- Loop here for each product of this type -->
+
+                @foreach (var item in Model)
+                {
+                    <!-- Every three cards need a new group-->
+                    int count = Model.Count();
+                    <div class="card-group">
+
+                    @for (int i = 0; i < (count > 3 ? 3:count); i++)
                     {
                         <div class="card">
-                            <img class="card-img-top" src="" alt="Card image cap">
+                            <img class="card-img-top" src="@Html.DisplayFor(product => item.Img)" alt="Card image cap">
                             <div class="card-body">
                                 <h5 class="card-title">@Html.DisplayFor(product => item.Name)</h5>
                                 <p class="card-text">
-                                    This is a wider card with supporting
-                                    text below as a natural lead-in to additional content. This
-                                    content is a little bit longer.
+                                    @Html.DisplayFor(product => item.Description)
                                 </p>
                             </div>
                             <div class="card-footer">
@@ -39,7 +43,9 @@
                             </div>
                         </div>
                     }
-                </div>
+                    </div>
+                    count -= 3;
+                }
             </div>
 
             <!-- Left and right controls -->
