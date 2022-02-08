@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PersonalStoreApplication.BusinessServices;
 using PersonalStoreApplication.Models;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,15 @@ namespace PersonalStoreApplication.Controllers
     /// </summary>
     public class LoginController : Controller
     {
+        //handles accessing logic and database queries.
+        private LoginBusinessService lbs;
+
+        //Default constructor, LoginBusinessService must be injected at creation
+        public LoginController(LoginBusinessService lbs)
+        {
+            this.lbs = lbs;
+        }
+
         /// <summary>
         /// Routing path for initial login page
         /// </summary>
@@ -39,14 +49,50 @@ namespace PersonalStoreApplication.Controllers
                 return View("Login", new User());
             }
 
-            ////////////////validate login here
-            HttpContext.Session.SetInt32("userId", 1);
-            //HttpContext.Session.SetString("userName", user.FirstName);
+            user.Id = lbs.ValidateLogin(user);
 
-            return View("LoginSuccess", user);
+            if (user.Id != -1)
+            {
+                //setup session variables
+                HttpContext.Session.SetInt32("userId", user.Id);
+                HttpContext.Session.SetString("userName", user.FirstName);
 
-            //return with errors
-            return View("Login", user);
+                return View("LoginSuccess", user);
+            }
+            else
+            {
+                //return with errors
+                ModelState.AddModelError(string.Empty, "Email and Password combination did not match.");
+                return View("Login", user);
+            }
+        }
+
+        /// <summary>
+        /// This method routes to logout the logout page
+        /// </summary>
+        /// <returns>A view to the logout page view</returns>
+        [CustomAuthorization(LogoutRequired = false)]
+        public IActionResult Logout()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// This is a helper method to create a logged out state.
+        /// </summary>
+        /// <returns>True if there was a suer and they were logged out. False if there was no user to logout.</returns>
+        [CustomAuthorization(LogoutRequired = false)]
+        public IActionResult ProcessLogout()
+        {
+
+            if (HttpContext.Session.GetInt32("userId") != null)
+            {
+
+                //remove session variables
+                HttpContext.Session.Remove("userId");
+                HttpContext.Session.Remove("userName");
+            }
+            return View("Login");
         }
     }
 }
