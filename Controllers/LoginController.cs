@@ -62,7 +62,7 @@ namespace PersonalStoreApplication.Controllers
             else
             {
                 //return with errors
-                ModelState.AddModelError(string.Empty, "Email and Password combination did not match.");
+                ModelState.AddModelError("", "Email and Password combination did not match.");
                 return View("Login", user);
             }
         }

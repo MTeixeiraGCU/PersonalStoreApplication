@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PersonalStoreApplication.BusinessServices;
+using PersonalStoreApplication.DatabaseServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +33,12 @@ namespace PersonalStoreApplication
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+
+            services.AddTransient<IUserDAO, UserLocalSqlDAO>();
+            services.AddTransient<LoginBusinessService, LoginBusinessService>();
+            services.AddTransient<RegistrationBusinessService, RegistrationBusinessService>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
