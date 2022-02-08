@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PersonalStoreApplication.Models;
 using System;
@@ -16,9 +17,23 @@ namespace PersonalStoreApplication.Controllers
         {
         }
 
+        /// <summary>
+        /// Entry point for the application
+        /// </summary>
+        /// <returns>A view of the main home page.</returns>
         public IActionResult Index()
         {
-            return View();
+            //check for logged in user
+            if(HttpContext.Session.Keys.Contains("userId"))
+            {
+                string name = HttpContext.Session.GetString("userName");
+                ViewBag.Message = "Welcome, " + name;
+            }
+            else
+            {
+                ViewBag.Message = "Welcome";
+            }
+            return View(new List<Product>());
         }
 
         public IActionResult About()
