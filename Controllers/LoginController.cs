@@ -17,10 +17,10 @@ namespace PersonalStoreApplication.Controllers
         /// Routing path for initial login page
         /// </summary>
         /// <returns>A login view</returns>
-        [CustomAuthorization(LogOutRequired = true)]
+        [CustomAuthorization(LogoutRequired = true)]
         public IActionResult Index()
         {
-            return View();
+            return View("Login");
         }
 
         /// <summary>
@@ -28,16 +28,25 @@ namespace PersonalStoreApplication.Controllers
         /// </summary>
         /// <param name="user">The user credentials to check validation on</param>
         /// <returns></returns>
-        [CustomAuthorization(LogOutRequired = true)]
+        [CustomAuthorization(LogoutRequired = true)]
         [LoginActionFilter]
         public IActionResult ProcessLogin(User user)
         {
+            //check for any remaining errors in the form
+            if (ModelState["Email"].Errors.Any() && ModelState["Password"].Errors.Any())
+            {
+                //return to the form with errors
+                return View("Login", new User());
+            }
 
             ////////////////validate login here
             HttpContext.Session.SetInt32("userId", 1);
             //HttpContext.Session.SetString("userName", user.FirstName);
 
             return View("LoginSuccess", user);
+
+            //return with errors
+            return View("Login", user);
         }
     }
 }

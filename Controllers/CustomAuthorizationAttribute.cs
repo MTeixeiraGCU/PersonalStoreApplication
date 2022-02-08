@@ -10,7 +10,7 @@ namespace PersonalStoreApplication.Controllers
     /// </summary>
     internal class CustomAuthorizationAttribute : Attribute, IAuthorizationFilter
     {
-        public bool LogOutRequired { get; set; }
+        public bool LogoutRequired { get; set; }
 
         /// <summary>
         /// This method checks for a valid user id in the sessions variables. If one does not exist, it redirects to the login page.
@@ -20,9 +20,9 @@ namespace PersonalStoreApplication.Controllers
         {
             int? userId = context.HttpContext.Session.GetInt32("userId");
 
-            if (userId == null && !LogOutRequired)
+            if (userId == null && !LogoutRequired)
                 context.Result = new RedirectResult("/Login");
-            else if (userId != null && LogOutRequired)
+            else if (userId != null && LogoutRequired)
                 context.Result = new RedirectResult("/Login/Logout?message=You must log out before you can do that!");
         }
     }

@@ -1,0 +1,74 @@
+﻿@model PersonalStoreApplication.Models.User
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Registration</h1>
+
+<h4>Enter your information.</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ProcessRegistration">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Form Fields for a User -->
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" type="email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" type="password" class="form-control" onkeyup="verifyPasswordMatch()" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="RenterPassword" class="control-label"></label>
+                <input id="RenterPassword" type="password" class="form-control" onkeyup="verifyPasswordMatch()" />
+                <span id="RenterPasswordErrors"></span>
+
+            </div>
+
+            <!-- submit button -->
+            <div class="form-group">
+                <input id="RegisterButton" type="submit" value="Register" class="btn btn-primary" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function verifyPasswordMatch() {
+        if (document.getElementById("Password").value == document.getElementById("RenterPassword").value)
+        {
+            document.getElementById('RenterPasswordErrors').classList.remove('text-danger')
+            document.getElementById('RenterPasswordErrors').classList.add('text-success')
+            document.getElementById('RenterPasswordErrors').innerHTML = 'Matching';
+            document.getElementById('RegisterButton').disabled = false;
+        }
+        else
+        {
+            document.getElementById('RenterPasswordErrors').classList.remove('text-success')
+            document.getElementById('RenterPasswordErrors').classList.add('text-danger')
+            document.getElementById('RenterPasswordErrors').innerHTML = 'Does Not Match';
+            document.getElementById('RegisterButton').disabled = true;
+        }
+    }
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

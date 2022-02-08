@@ -10,7 +10,7 @@ namespace PersonalStoreApplication.Controllers
     /// <summary>
     /// This class controller is designed to process routing for the registration module
     /// </summary>
-    [CustomAuthorization(LogOutRequired = true)]
+    [CustomAuthorization(LogoutRequired = true)]
     public class RegistrationController : Controller
     {
         /*private RegistrationBusinessService rbs;
@@ -24,9 +24,10 @@ namespace PersonalStoreApplication.Controllers
         /// Initial registration module entry point route.
         /// </summary>
         /// <returns>A view of the initial form for user registration.</returns>
+        [CustomAuthorization(LogoutRequired = true)]
         public IActionResult Index()
         {
-            return View("Index", new User());
+            return View("Register", new User());
         }
 
         /// <summary>
@@ -45,8 +46,11 @@ namespace PersonalStoreApplication.Controllers
             //check for any remaining errors in the form
             if (!ModelState.IsValid)
             {
+                //reset password
+                user.Password = null;
+
                 //return to the form with errors
-                return View("Index", new User());
+                return View("Register", user);
             }
 
             //register user

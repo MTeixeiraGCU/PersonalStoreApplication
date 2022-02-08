@@ -13,12 +13,12 @@ namespace PersonalStoreApplication.Controllers
         public void OnActionExecuted(ActionExecutedContext context)
         {
 
-            User user = (User)((Controller)context.Controller).ViewData.Model;
+            //Logs after execution
         }
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            //Processing login info here.
+            //Logs during execution
         }
     }
 }
