@@ -50,9 +50,11 @@ namespace PersonalStoreApplication.Controllers
             }
 
             user.Id = lbs.ValidateLogin(user);
-
             if (user.Id != -1)
             {
+                //get the users full account information.
+                user = lbs.GetUser(user.Id);
+
                 //setup session variables
                 HttpContext.Session.SetInt32("userId", user.Id);
                 HttpContext.Session.SetString("userName", user.FirstName);

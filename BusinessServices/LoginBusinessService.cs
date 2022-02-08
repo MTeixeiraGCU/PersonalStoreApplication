@@ -27,11 +27,26 @@ namespace PersonalStoreApplication.BusinessServices
         /// <returns>Integer value of the logged in user. Will return -1 if the log in failed.</returns>
         public int ValidateLogin(User user)
         {
-            if (userDAO.FindUserByEmailAndPassword(user.Email, user.Password))
-            {
-                return userDAO.GetIdFromEmail(user.Email);
-            }
-            return -1;
+            //get the valid user from the email
+            int id = userDAO.GetIdFromEmail(user.Email);
+            User validUser = userDAO.Get(id);
+
+            //check if user exists and if the passwords match
+            if (validUser == null || !(validUser.Password.Equals(user.Password)))
+                return -1;
+
+            //user was validated
+            return validUser.Id;
+        }
+
+        /// <summary>
+        /// This method gets the user from the database layer from the given id.
+        /// </summary>
+        /// <param name="id">The user id to search the database layer for.</param>
+        /// <returns>A complete User object if found, null if there is no user attached to the id given.</returns>
+        public User GetUser(int id)
+        {
+            return userDAO.Get(id);
         }
     }
 }

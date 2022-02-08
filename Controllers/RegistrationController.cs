@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PersonalStoreApplication.BusinessServices;
 using PersonalStoreApplication.Models;
 using System;
 using System.Collections.Generic;
@@ -13,12 +14,14 @@ namespace PersonalStoreApplication.Controllers
     [CustomAuthorization(LogoutRequired = true)]
     public class RegistrationController : Controller
     {
-        /*private RegistrationBusinessService rbs;
+        //handles accessing logic and database queries.
+        private RegistrationBusinessService rbs;
 
+        //Default constructor, RegistrationBusinessService must be injected on creation.
         public RegistrationController(RegistrationBusinessService rbs)
         {
             this.rbs = rbs;
-        }*/
+        }
 
         /// <summary>
         /// Initial registration module entry point route.
@@ -38,10 +41,10 @@ namespace PersonalStoreApplication.Controllers
         public IActionResult ProcessRegistration(User user)
         {
             //Check for duplicate email
-            /*if (!rbs.CheckEmailAvailability(user.Email))
+            if (!rbs.CheckEmailAvailability(user.Email))
             {
                 ModelState.AddModelError("Email", "That email has been used for another account already!");
-            }*/
+            }
 
             //check for any remaining errors in the form
             if (!ModelState.IsValid)
@@ -54,13 +57,14 @@ namespace PersonalStoreApplication.Controllers
             }
 
             //register user
-            if (true)//rbs.RegisterUser(user))
+            if (rbs.RegisterUser(user))
             {
                 return View("RegistrationSuccess", user);
             }
             else
             {
-                return View("RegistrationFailure", user);
+                ModelState.AddModelError("", "There was a problem during registration, servers may be down!");
+                return View("Register", user);
             }
         }
     }

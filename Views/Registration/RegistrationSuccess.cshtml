@@ -7,15 +7,9 @@
 <h1>RegistrationSuccess</h1>
 
 <div>
-    <h4>User</h4>
+    <h4>Your information.</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.FirstName)
         </dt>
@@ -34,8 +28,10 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Email)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
     </dl>
+</div>
+
+<div>
+    <a asp-controller="Login" asp-action="Index">Continue to Login</a> |
+    <a asp-controller="Home" asp-action="Index">Back to Home</a>
 </div>

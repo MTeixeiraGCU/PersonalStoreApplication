@@ -12,19 +12,18 @@ namespace PersonalStoreApplication.DatabaseServices
     public interface IUserDAO
     {
         /// <summary>
-        /// This method retrieves a user's complete information from the given user name and password.
-        /// </summary>
-        /// <param name="email">Unique user name to search for in the database</param>
-        /// <param name="password">Associated password to validate user with.</param>
-        /// <returns>Boolean value of successful location of user credentials. true if they were found, false otherwise.</returns>
-        public bool FindUserByEmailAndPassword(string email, string password);
-
-        /// <summary>
         /// This method finds the user's unique Id from their given email.
         /// </summary>
         /// <param name="email">The email that the user chose during registration.</param>
         /// <returns>The found Id that matches the user's unique email. returns -1 if no entries were found.</returns>
         public int GetIdFromEmail(string email);
+
+        /// <summary>
+        /// This method gets a single user by their unique Id.
+        /// </summary>
+        /// <param name="id">The id to check the database for.</param>
+        /// <returns>The found user object found from the given id. returns null if no users were found.</returns>
+        public User Get(int id);
 
         /// <summary>
         /// This method adds a user to the database.
