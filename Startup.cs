@@ -35,9 +35,11 @@ namespace PersonalStoreApplication
             });
 
             services.AddTransient<IUserDAO, UserLocalSqlDAO>();
+            services.AddTransient<IProductDAO, ProductLocalSqlDAO>();
+
             services.AddTransient<LoginBusinessService, LoginBusinessService>();
             services.AddTransient<RegistrationBusinessService, RegistrationBusinessService>();
-
+            services.AddTransient<ProductBusinessService, ProductBusinessService>();
 
         }
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PersonalStoreApplication.BusinessServices;
 using PersonalStoreApplication.Models;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,12 @@ namespace PersonalStoreApplication.Controllers
 {
     public class HomeController : Controller
     {
+        //handles product logic and database queries
+        private ProductBusinessService pbs;
 
-        public HomeController()
+        public HomeController(ProductBusinessService productBusinessService)
         {
+            pbs = productBusinessService;
         }
 
         /// <summary>
@@ -33,7 +37,7 @@ namespace PersonalStoreApplication.Controllers
             {
                 ViewBag.Message = "Welcome";
             }
-            return View(new List<Product>());
+            return View(pbs.GetAllProducts());
         }
 
         public IActionResult About()

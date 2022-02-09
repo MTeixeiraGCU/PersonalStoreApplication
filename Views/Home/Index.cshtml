@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Home Page";
+    var counter = 0;
 }
 
 <div class="text-center">
@@ -19,19 +20,26 @@
         <div class="carousel-inner">
 
             <div class="carousel-item active">
-
-                <!-- Loop here for each product of this type -->
-
-                @foreach (var item in Model)
-                {
-                    <!-- Every three cards need a new group-->
-                    int count = Model.Count();
-                    <div class="card-group">
-
-                    @for (int i = 0; i < (count > 3 ? 3:count); i++)
+                <div class="card-group">
+                     
+                    @foreach (var item in Model) //Loop here for each product of this type
                     {
+                        //Every three cards need a new group
+                        @if (counter % 3 == 0 && counter != 0)
+                        {
+                            @:</div>
+                            @:</div>
+                            @:<div class="carousel-item">
+                            @:<div class="card-group">
+                        }
+
+                        //Find the name of the product for auto images
+                        var s = item.Name;
+                        var firstWord = s.IndexOf(" ") > -1 ? s.Substring(0, s.IndexOf(" ")) : s;
+                       
+                        <!-- Display the current product card -->
                         <div class="card">
-                            <img class="card-img-top" src="@Html.DisplayFor(product => item.Img)" alt="Card image cap">
+                            <img class="card-img-top" src="https://loremflickr.com/160/120/@firstWord?lock=@item.Id" alt="Card image cap">
                             <div class="card-body">
                                 <h5 class="card-title">@Html.DisplayFor(product => item.Name)</h5>
                                 <p class="card-text">
@@ -42,12 +50,12 @@
                                 <small class="text-muted">Last updated 3 mins ago</small>
                             </div>
                         </div>
-                    }
-                    </div>
-                    count -= 3;
-                }
-            </div>
 
+                        //Increment the counter to keep groups of three
+                        counter++;
+                    }
+                 </div>
+            </div>
             <!-- Left and right controls -->
             <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon bg-dark border border-dark rounded-circle" aria-hidden="true" style="left: 0; position: absolute;"></span>

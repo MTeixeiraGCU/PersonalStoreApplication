@@ -19,11 +19,8 @@ namespace PersonalStoreApplication.Models
         //Name of the product
         public string Name { get; set; }
 
-        //Dollar amount for the cost of the product
-        public int CostDollars { get; set; }
-
-        //Cents amount for the product
-        public int CostCents { get; set; }
+        //Cost of the product in U.S. Dollars
+        public decimal Price { get; set; }
 
         //Short description of the product
         public string Description { get; set; }
@@ -35,20 +32,25 @@ namespace PersonalStoreApplication.Models
         {
         }
 
-        public Product(int id, string img, string name, int costDollars, int costCents, string description, List<string> tags)
+        public Product(int id, string img, string name, decimal price, string description, List<string> tags)
         {
             Id = id;
             Img = img;
             Name = name;
-            CostDollars = costDollars;
-            CostCents = costCents;
+            Price = price;
             Description = description;
             Tags = tags;
         }
 
         public override string ToString()
         {
-            return "Id: " + Id + ", Name: " + Name + ", Cost: $" + CostDollars + "." + CostCents; 
+            return "Id: " + Id + ", Name: " + Name + ", Cost: $" + string.Format("{0:C}", Price); 
+        }
+
+        public static List<string> ParseTags(string tags)
+        {
+            var tagArray = tags.Split(',');
+            return tagArray.ToList();
         }
     }
 }
