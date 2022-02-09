@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PersonalStoreApplication.BusinessServices;
 using PersonalStoreApplication.Models;
 using System;
 using System.Collections.Generic;
@@ -7,21 +8,47 @@ using System.Threading.Tasks;
 
 namespace PersonalStoreApplication.Controllers
 {
+    /// <summary>
+    /// This controller handles all the product actions including searches and adding/editing products by an administrator.
+    /// </summary>
     public class ProductController : Controller
     {
+        //handles logic and database queries for products.
+        ProductBusinessService pbs;
+
+        //Default constructor, requires ProductBusinessService Injection
+        public ProductController(ProductBusinessService pbs)
+        {
+            this.pbs = pbs;
+        }
+
+        /// <summary>
+        /// This is the entry point for the product controller. This will always redirect to the home page.
+        /// </summary>
+        /// <returns>A view containing the home page.</returns>
         public IActionResult Index()
         {
             return RedirectToAction("Index", "Home");
         }
 
+        /// <summary>
+        /// This action routes to the search form view.
+        /// </summary>
+        /// <returns>A view for the search form.</returns>
         public IActionResult Search()
         {
             return View();
         }
 
+        /// <summary>
+        /// This action process the incoming token from the search form.
+        /// </summary>
+        /// <param name="token">search pattern to match against the products with.</param>
+        /// <returns>A view list containing all the matching products.</returns>
         public IActionResult ProcessSearch(string token)
         {
-            return View("Index", "Home");
+            ViewBag.Message = token;
+            return View("SearchResults", pbs.SearchForProducts(token));
         }
     }
 }

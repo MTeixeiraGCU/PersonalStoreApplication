@@ -24,5 +24,10 @@ namespace PersonalStoreApplication.BusinessServices
         {
             return productDAO.GetAll();
         }
+
+        public List<Product> SearchForProducts(string token)
+        {
+            return productDAO.GetAll();
+        }
     }
 }

@@ -1,0 +1,16 @@
+﻿@model IEnumerable<PersonalStoreApplication.Models.Product>
+
+@{
+    ViewData["Title"] = "Searching Products";
+}
+
+<h1>Search Results for @ViewBag.Message</h1>
+
+<div class="row">
+    @foreach (var item in Model) {
+        <div class="col-sm-4">
+            <partial name="_productCard" model="item" />        
+        </div>
+    }
+</div>
+
