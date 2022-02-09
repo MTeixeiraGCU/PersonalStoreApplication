@@ -23,10 +23,5 @@ namespace PersonalStoreApplication.Controllers
         {
             return View("Index", "Home");
         }
-
-        public PartialViewResult GetPartialProductCard(Product product)
-        {
-            return PartialView("_productCard", product);
-        }
     }
 }
