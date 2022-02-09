@@ -33,12 +33,12 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Search Products</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Search">Search Products</a>
                         </li>
                         @if (Context.Session.GetInt32("userId") != null)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Search Products</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Search">Search Products</a>
                             </li>
                         }
                     </ul>
