@@ -21,51 +21,37 @@
 
             <div class="carousel-item active">
                 <div class="card-group">
-                     
+
                     @foreach (var item in Model) //Loop here for each product of this type
                     {
                         //Every three cards need a new group
                         @if (counter % 3 == 0 && counter != 0)
                         {
-                            @:</div>
-                            @:</div>
-                            @:<div class="carousel-item">
-                            @:<div class="card-group">
+                        @:</div>
+                    @:</div>
+                    @:<div class="carousel-item">
+                        @:<div class="card-group">
                         }
 
-                        //Find the name of the product for auto images
-                        var s = item.Name;
-                        var firstWord = s.IndexOf(" ") > -1 ? s.Substring(0, s.IndexOf(" ")) : s;
-                       
-                        <!-- Display the current product card -->
-                        <div class="card">
-                            <img class="card-img-top" src="https://loremflickr.com/160/120/@firstWord?lock=@item.Id" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title">@Html.DisplayFor(product => item.Name)</h5>
-                                <p class="card-text">
-                                    @Html.DisplayFor(product => item.Description)
-                                </p>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                            </div>
-                        </div>
+                        <partial name="_productCard" model="item" />
 
                         //Increment the counter to keep groups of three
                         counter++;
                     }
-                 </div>
+                </div>
             </div>
-            <!-- Left and right controls -->
-            <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon bg-dark border border-dark rounded-circle" aria-hidden="true" style="left: 0; position: absolute;"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon bg-dark border border-dark rounded-circle" aria-hidden="true" style="right: 0; position: absolute;"></span>
-                <span class="sr-only">Next</span>
-            </a>
 
         </div>
+
+        <!-- Left and right controls -->
+        <!-- Left and right controls -->
+        <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true" style="left: 0; position: absolute;"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true" style="right: 0; position: absolute;"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
 </div>
