@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace PersonalStoreApplication.DatabaseServices
 {
     /// <summary>
-    /// 
+    /// Implementation of the Product DAO interface for the local visual studio database.
     /// </summary>
     public class ProductLocalSqlDAO : IProductDAO
     {
@@ -65,6 +65,49 @@ namespace PersonalStoreApplication.DatabaseServices
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
+
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.HasRows)
+                    {
+                        reader.Read();
+
+                        Product product = new Product();
+                        product.Id = (int)reader["ID"];
+                        product.Img = (string)reader["IMG"];
+                        product.Name = (string)reader["NAME"];
+                        product.Price = (decimal)reader["PRICE"];
+                        product.Description = (string)reader["DESCRIPTION"];
+                        product.Tags = Product.ParseTags((string)reader["TAGS"]);
+
+                        products.Add(product);
+                    }
+
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                };
+            }
+
+            return products;
+        }
+
+        public List<Product> SearchProducts(string name)
+        {
+            List<Product> products = new List<Product>();
+
+            string query = "SELECT * FROM products WHERE NAME LIKE @name";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.Add("@name", System.Data.SqlDbType.NVarChar, 40).Value = name;
 
                 try
                 {

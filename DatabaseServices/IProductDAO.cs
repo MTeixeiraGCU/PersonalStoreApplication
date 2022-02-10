@@ -23,5 +23,12 @@ namespace PersonalStoreApplication.DatabaseServices
         /// <param name="id">The id to search the products for.</param>
         /// <returns>The found product matching the given id, will return null if no product exists.</returns>
         public Product Get(int id);
+
+        /// <summary>
+        /// This method searches the persistence layer for the matching requirements given
+        /// </summary>
+        /// <param name="name">The name to search the database for.</param>
+        /// <returns>A list of all the products found that match the search criteria.</returns>
+        public List<Product> SearchProducts(string name);
     }
 }

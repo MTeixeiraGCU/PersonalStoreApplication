@@ -27,7 +27,13 @@ namespace PersonalStoreApplication.BusinessServices
 
         public List<Product> SearchForProducts(string token)
         {
-            return productDAO.GetAll();
+            if (token.Equals(string.Empty))
+                return productDAO.GetAll();
+
+            //process the search token
+            token = "%" + token + "%";
+
+            return productDAO.SearchProducts(token);
         }
     }
 }
