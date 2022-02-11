@@ -63,25 +63,37 @@ namespace PersonalStoreApplication.Controllers
         }
 
         [CustomAuthorization(LogoutRequired = false)]
-        public IActionResult AddProductToCart(int productId)
+        public IActionResult AddProductToCart(int productId, int current)
         {
             //get user id
             int id = (int)HttpContext.Session.GetInt32("userId");
 
             //add product to their cart
-            pbs.AddToCart(id, productId);
+            pbs.AddToCart(id, productId, current, 1);
 
             return View("Cart", pbs.GetUsersCart(id));
         }
 
         [CustomAuthorization(LogoutRequired = false)]
-        public IActionResult RemoveProductFromCart(int productId)
+        public IActionResult RemoveProductFromCart(int productId, int current)
         {
             //get user id
             int id = (int)HttpContext.Session.GetInt32("userId");
 
-            //add product to their cart
-            pbs.RemoveFromCart(id, productId);
+            //remove product from their cart
+            pbs.AddToCart(id, productId, current, -1);
+
+            return View("Cart", pbs.GetUsersCart(id));
+        }
+
+        [CustomAuthorization(LogoutRequired = false)]
+        public IActionResult SetCartAmount(int productId, int newAmount)
+        {
+            //get user id
+            int id = (int)HttpContext.Session.GetInt32("userId");
+
+            //remove product from their cart
+            pbs.AddToCart(id, productId, newAmount, 0);
 
             return View("Cart", pbs.GetUsersCart(id));
         }

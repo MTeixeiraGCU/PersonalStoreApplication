@@ -178,14 +178,14 @@ namespace PersonalStoreApplication.DatabaseServices
             return products;
         }
 
-        public bool AddToCart(int userId, int productId)
+        public bool UpdateCart(int userId, int productId, int quantity)
         {
             bool results = false;
 
-            string query = "UPDATE carts SET QUANTITY = QUANTITY + 1 WHERE USERID = @userId AND PRODUCTID = @productId;" +
+            string query = "UPDATE carts SET QUANTITY = @quantity WHERE USERID = @userId AND PRODUCTID = @productId;" +
                            "IF @@ROWCOUNT = 0 " +
                            "BEGIN " +
-                           "INSERT INTO carts(USERID, PRODUCTID, QUANTITY) VALUES(@userId, @productId, 1);" +
+                           "INSERT INTO carts(USERID, PRODUCTID, QUANTITY) VALUES(@userId, @productId, @quantity);" +
                            "END";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -194,6 +194,7 @@ namespace PersonalStoreApplication.DatabaseServices
 
                 command.Parameters.Add("@userId", System.Data.SqlDbType.Int).Value = userId;
                 command.Parameters.Add("@productId", System.Data.SqlDbType.Int).Value = productId;
+                command.Parameters.Add("@quantity", System.Data.SqlDbType.Int).Value = quantity;
 
                 try
                 {
@@ -217,16 +218,11 @@ namespace PersonalStoreApplication.DatabaseServices
             return results;
         }
 
-        public bool RemoveFromCart(int userId, int productId)
+        public bool DeleteFromCart(int userId, int productId)
         {
             bool results = false;
 
-            string query = "UPDATE carts SET QUANTITY = QUANTITY - 1 WHERE USERID = @userId AND PRODUCTID = @productId;" +
-                           "SELECT QUANTITY FROM carts WHERE USERID = @userId AND PRODUCTID = @productId AND QUANTITY = 0;" +
-                           "IF @@ROWCOUNT > 0 " +
-                           "BEGIN " +
-                           "DELETE FROM carts WHERE USERID = @userId AND PRODUCTID = @productId;" +
-                           "END";
+            string query = "DELETE FROM carts WHERE USERID = @userId AND PRODUCTID = @productId;";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

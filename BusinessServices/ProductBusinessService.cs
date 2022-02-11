@@ -41,14 +41,12 @@ namespace PersonalStoreApplication.BusinessServices
             return productDAO.GetCartList(userId);
         }
 
-        public bool AddToCart(int userId, int productId)
+        public bool AddToCart(int userId, int productId, int current, int amount)
         {
-            return productDAO.AddToCart(userId, productId);
-        }
-
-        public bool RemoveFromCart(int userId, int productId)
-        {
-            return productDAO.RemoveFromCart(userId, productId);
+            int quantity = current + amount;
+            if (quantity <= 0)
+                return productDAO.DeleteFromCart(userId, productId);
+            return productDAO.UpdateCart(userId, productId, quantity);
         }
     }
 }
