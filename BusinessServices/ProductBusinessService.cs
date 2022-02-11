@@ -45,5 +45,10 @@ namespace PersonalStoreApplication.BusinessServices
         {
             return productDAO.AddToCart(userId, productId);
         }
+
+        public bool RemoveFromCart(int userId, int productId)
+        {
+            return productDAO.RemoveFromCart(userId, productId);
+        }
     }
 }

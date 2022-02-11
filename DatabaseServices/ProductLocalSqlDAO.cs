@@ -216,5 +216,45 @@ namespace PersonalStoreApplication.DatabaseServices
 
             return results;
         }
+
+        public bool RemoveFromCart(int userId, int productId)
+        {
+            bool results = false;
+
+            string query = "UPDATE carts SET QUANTITY = QUANTITY - 1 WHERE USERID = @userId AND PRODUCTID = @productId;" +
+                           "SELECT QUANTITY FROM carts WHERE USERID = @userId AND PRODUCTID = @productId AND QUANTITY = 0;" +
+                           "IF @@ROWCOUNT > 0 " +
+                           "BEGIN " +
+                           "DELETE FROM carts WHERE USERID = @userId AND PRODUCTID = @productId;" +
+                           "END";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.Add("@userId", System.Data.SqlDbType.Int).Value = userId;
+                command.Parameters.Add("@productId", System.Data.SqlDbType.Int).Value = productId;
+
+                try
+                {
+                    connection.Open();
+
+                    int affectedRows = command.ExecuteNonQuery();
+
+                    if (affectedRows > 0)
+                    {
+                        results = true;
+                    }
+
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                };
+            }
+
+            return results;
+        }
     }
 }

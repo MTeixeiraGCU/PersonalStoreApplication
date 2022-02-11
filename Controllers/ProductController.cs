@@ -73,5 +73,17 @@ namespace PersonalStoreApplication.Controllers
 
             return View("Cart", pbs.GetUsersCart(id));
         }
+
+        [CustomAuthorization(LogoutRequired = false)]
+        public IActionResult RemoveProductFromCart(int productId)
+        {
+            //get user id
+            int id = (int)HttpContext.Session.GetInt32("userId");
+
+            //add product to their cart
+            pbs.RemoveFromCart(id, productId);
+
+            return View("Cart", pbs.GetUsersCart(id));
+        }
     }
 }

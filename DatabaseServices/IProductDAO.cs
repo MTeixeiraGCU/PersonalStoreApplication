@@ -45,5 +45,7 @@ namespace PersonalStoreApplication.DatabaseServices
         /// <param name="productId">Product id for the item to add.</param>
         /// <returns>True if the item was added, false otherwise.</returns>
         public bool AddToCart(int userId, int productId);
+
+        public bool RemoveFromCart(int userId, int productId);
     }
 }
