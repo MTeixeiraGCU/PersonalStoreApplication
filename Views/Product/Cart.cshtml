@@ -42,7 +42,10 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
+                    @Html.DropDownListFor(modelItem => item.Quantity, 
+                                          Enumerable.Range(0, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }),
+                                          null, 
+                                          new { @onchange = "updateQuantity(" + item.Id + ", this.options[this.selectedIndex].value)" })
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Price)
@@ -62,3 +65,10 @@
 <p>
     <a asp-action="ProcessCheckout" class="btn btn-secondary">Checkout</a>
 </p>
+
+<script>
+    function updateQuantity(productId, amount) {
+        var url = "SetCartAmount?productId=" + productId + "&newAmount=" + amount;
+        window.location.replace(url);
+    }
+</script>
