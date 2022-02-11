@@ -36,9 +36,14 @@ namespace PersonalStoreApplication.BusinessServices
             return productDAO.SearchProducts(token);
         }
 
-        public List<Product> GetUsersCart(int userId)
+        public List<CartItemDTO> GetUsersCart(int userId)
         {
             return productDAO.GetCartList(userId);
+        }
+
+        public bool AddToCart(int userId, int productId)
+        {
+            return productDAO.AddToCart(userId, productId);
         }
     }
 }

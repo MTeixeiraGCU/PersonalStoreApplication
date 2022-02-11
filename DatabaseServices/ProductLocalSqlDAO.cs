@@ -32,10 +32,8 @@ namespace PersonalStoreApplication.DatabaseServices
                     connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
 
-                    if (reader.HasRows)
+                    if (reader.Read())
                     {
-                        reader.Read();
-
                         product = new Product();
                         product.Id = id;
                         product.Img = (string)reader["IMG"];
@@ -71,10 +69,8 @@ namespace PersonalStoreApplication.DatabaseServices
                     connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
 
-                    while (reader.HasRows)
+                    while (reader.Read())
                     {
-                        reader.Read();
-
                         Product product = new Product();
                         product.Id = (int)reader["ID"];
                         product.Img = (string)reader["IMG"];
@@ -97,9 +93,9 @@ namespace PersonalStoreApplication.DatabaseServices
             return products;
         }
 
-        public List<Product> GetCartList(int userId)
+        public List<CartItemDTO> GetCartList(int userId)
         {
-            List<Product> products = new List<Product>();
+            List<CartItemDTO> products = new List<CartItemDTO>();
 
             string query = "SELECT products.ID, products.IMG, products.NAME, products.PRICE, products.DESCRIPTION, products.TAGS, carts.QUANTITY " +
                            "FROM products " +
@@ -116,23 +112,18 @@ namespace PersonalStoreApplication.DatabaseServices
                     connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
 
-                    while (reader.HasRows)
+                    while (reader.Read())
                     {
-                        reader.Read();
-
-                        int quantity = (int)reader["QUANTITY"];
-
-                        Product product = new Product();
+                        CartItemDTO product = new CartItemDTO();
                         product.Id = (int)reader["ID"];
                         product.Img = (string)reader["IMG"];
                         product.Name = (string)reader["NAME"];
                         product.Price = (decimal)reader["PRICE"];
                         product.Description = (string)reader["DESCRIPTION"];
                         product.Tags = Product.ParseTags((string)reader["TAGS"]);
+                        product.Quantity = (int)reader["QUANTITY"];
 
-                        //add one for each product of this type in cart
-                        for(int i = 0;i < quantity;i++)
-                            products.Add(product);
+                        products.Add(product);
                     }
 
                     connection.Close();
@@ -163,10 +154,8 @@ namespace PersonalStoreApplication.DatabaseServices
                     connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
 
-                    while (reader.HasRows)
+                    while (reader.Read())
                     {
-                        reader.Read();
-
                         Product product = new Product();
                         product.Id = (int)reader["ID"];
                         product.Img = (string)reader["IMG"];
@@ -187,6 +176,45 @@ namespace PersonalStoreApplication.DatabaseServices
             }
 
             return products;
+        }
+
+        public bool AddToCart(int userId, int productId)
+        {
+            bool results = false;
+
+            string query = "UPDATE carts SET QUANTITY = QUANTITY + 1 WHERE USERID = @userId AND PRODUCTID = @productId;" +
+                           "IF @@ROWCOUNT = 0 " +
+                           "BEGIN " +
+                           "INSERT INTO carts(USERID, PRODUCTID, QUANTITY) VALUES(@userId, @productId, 1);" +
+                           "END";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.Add("@userId", System.Data.SqlDbType.Int).Value = userId;
+                command.Parameters.Add("@productId", System.Data.SqlDbType.Int).Value = productId;
+
+                try
+                {
+                    connection.Open();
+
+                    int affectedRows = command.ExecuteNonQuery();
+
+                    if (affectedRows > 0)
+                    {
+                        results = true;
+                    }
+
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                };
+            }
+
+            return results;
         }
     }
 }

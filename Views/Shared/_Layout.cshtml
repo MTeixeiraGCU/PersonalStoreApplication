@@ -11,7 +11,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-md navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-md navbar-toggleable-md navbar-light bg-light border-bottom box-shadow mb-3 mt-3 p-1">
             <div class="container">
 
                 <!-- Application Icon -->
@@ -30,15 +30,15 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1 ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark bg-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Search">Search Products</a>
+                            <a class="nav-link text-dark bg-light" asp-area="" asp-controller="Product" asp-action="Search">Search Products</a>
                         </li>
                         @if (Context.Session.GetInt32("userId") != null)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Search">Search Products</a>
+                                <a class="nav-link text-dark bg-light" asp-area="" asp-controller="Product" asp-action="Cart">View Cart</a>
                             </li>
                         }
                     </ul>
@@ -46,20 +46,20 @@
 
                 <!-- Right navigation buttons -->
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1 mr-auto">
+                    <ul class="navbar-nav ml-auto col-auto">
                         @if (Context.Session.GetInt32("userId") != null)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark navbar-right" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
+                                <a class="nav-link text-dark navbar-right bg-light" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark navbar-right" asp-area="" asp-controller="Login" asp-action="Index">Sign In</a>
+                                <a class="nav-link text-dark navbar-right bg-light" asp-area="" asp-controller="Login" asp-action="Index">Sign In</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark navbar-right" asp-area="" asp-controller="Registration" asp-action="Index">Sign Up</a>
+                                <a class="nav-link text-dark navbar-right bg-light" asp-area="" asp-controller="Registration" asp-action="Index">Sign Up</a>
                             </li>
                         }
                     </ul>

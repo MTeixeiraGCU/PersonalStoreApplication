@@ -67,10 +67,8 @@ namespace PersonalStoreApplication.DatabaseServices
                     connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
 
-                    if (reader.HasRows)
+                    if (reader.Read())
                     {
-                        reader.Read();
-
                         user = new User();
                         user.Id = id;
                         user.Email = (string)reader["EMAIL"];
@@ -92,7 +90,7 @@ namespace PersonalStoreApplication.DatabaseServices
 
         public bool Add(User user)
         {
-            bool success = false;
+            bool results = false;
 
             string query = "INSERT INTO users (EMAIL, PASSWORD, FIRSTNAME, LASTNAME) VALUES (@email, @password, @firstname, @lastname)";
 
@@ -112,7 +110,7 @@ namespace PersonalStoreApplication.DatabaseServices
 
                     if (affectedRows > 0)
                     {
-                        success = true;
+                        results = true;
                     }
 
                     connection.Close();
@@ -123,7 +121,7 @@ namespace PersonalStoreApplication.DatabaseServices
                 }
             }
 
-            return success;
+            return results;
         }
     }
 }

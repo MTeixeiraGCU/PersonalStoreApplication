@@ -31,6 +31,19 @@ namespace PersonalStoreApplication.DatabaseServices
         /// <returns>A list of all the products found that match the search criteria.</returns>
         public List<Product> SearchProducts(string name);
 
-        public List<Product> GetCartList(int userId);
+        /// <summary>
+        /// Gets the list of product items and quantities from the persistence layer owned by the given user id.
+        /// </summary>
+        /// <param name="userId">The id of the user whose items should be complied.</param>
+        /// <returns>A list of products attached to a quantity for each.</returns>
+        public List<CartItemDTO> GetCartList(int userId);
+
+        /// <summary>
+        /// This method takes in a user id and product id then adds a single product to the users cart.
+        /// </summary>
+        /// <param name="userId">User's id to add the product to.</param>
+        /// <param name="productId">Product id for the item to add.</param>
+        /// <returns>True if the item was added, false otherwise.</returns>
+        public bool AddToCart(int userId, int productId);
     }
 }

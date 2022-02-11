@@ -52,10 +52,26 @@ namespace PersonalStoreApplication.Controllers
             return View("SearchResults", pbs.SearchForProducts(token));
         }
 
+        /// <summary>
+        /// This routing methods handles access of a users personal cart.
+        /// </summary>
+        /// <returns>A view containing the list of all items in the users cart.</returns>
         [CustomAuthorization(LogoutRequired = false)]
         public IActionResult Cart()
         {
             return View(pbs.GetUsersCart((int)HttpContext.Session.GetInt32("userId")));
+        }
+
+        [CustomAuthorization(LogoutRequired = false)]
+        public IActionResult AddProductToCart(int productId)
+        {
+            //get user id
+            int id = (int)HttpContext.Session.GetInt32("userId");
+
+            //add product to their cart
+            pbs.AddToCart(id, productId);
+
+            return View("Cart", pbs.GetUsersCart(id));
         }
     }
 }
