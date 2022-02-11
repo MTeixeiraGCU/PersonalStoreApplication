@@ -30,5 +30,7 @@ namespace PersonalStoreApplication.DatabaseServices
         /// <param name="name">The name to search the database for.</param>
         /// <returns>A list of all the products found that match the search criteria.</returns>
         public List<Product> SearchProducts(string name);
+
+        public List<Product> GetCartList(int userId);
     }
 }

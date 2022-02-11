@@ -97,6 +97,55 @@ namespace PersonalStoreApplication.DatabaseServices
             return products;
         }
 
+        public List<Product> GetCartList(int userId)
+        {
+            List<Product> products = new List<Product>();
+
+            string query = "SELECT products.ID, products.IMG, products.NAME, products.PRICE, products.DESCRIPTION, products.TAGS, carts.QUANTITY " +
+                           "FROM products " +
+                           "INNER JOIN carts ON products.ID = carts.PRODUCTID WHERE carts.USERID = @id";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.Add("@id", System.Data.SqlDbType.Int).Value = userId;
+
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.HasRows)
+                    {
+                        reader.Read();
+
+                        int quantity = (int)reader["QUANTITY"];
+
+                        Product product = new Product();
+                        product.Id = (int)reader["ID"];
+                        product.Img = (string)reader["IMG"];
+                        product.Name = (string)reader["NAME"];
+                        product.Price = (decimal)reader["PRICE"];
+                        product.Description = (string)reader["DESCRIPTION"];
+                        product.Tags = Product.ParseTags((string)reader["TAGS"]);
+
+                        //add one for each product of this type in cart
+                        for(int i = 0;i < quantity;i++)
+                            products.Add(product);
+                    }
+
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                };
+            }
+
+            return products;
+        }
+
         public List<Product> SearchProducts(string name)
         {
             List<Product> products = new List<Product>();

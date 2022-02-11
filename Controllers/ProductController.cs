@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using PersonalStoreApplication.BusinessServices;
 using PersonalStoreApplication.Models;
 using System;
@@ -49,6 +50,12 @@ namespace PersonalStoreApplication.Controllers
         {
             ViewBag.Message = token;
             return View("SearchResults", pbs.SearchForProducts(token));
+        }
+
+        [CustomAuthorization(LogoutRequired = false)]
+        public IActionResult Cart()
+        {
+            return View(pbs.GetUsersCart((int)HttpContext.Session.GetInt32("userId")));
         }
     }
 }
