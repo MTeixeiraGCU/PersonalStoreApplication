@@ -12,9 +12,22 @@
         <partial name="_cartList" model="Model.CartList" />
     </div>
     <div class="flex-fill m-1 p-2 border border-dark rounded">
-        <h5>Shipping Address</h5>
-        <partial name="_addresses" model="Model.Addresses" />
-        <button>New Address</button>
-        <select asp-for="@Model.Payment" asp-items="Html.GetEnumSelectList<PaymentType>()"/>
+        
+        <div class="d-flex flex-column">
+            <div class="p-2 pb-1">
+                <h5>Shipping Address</h5>
+                <partial name="_addresses" model="Model.Addresses" />
+            </div>
+            <div class="p-2 pt-1">
+                <button>New Address</button>
+            </div>
+            <div class="p-2">
+                <label asp-for="@Model.Payment"></label>
+                <select asp-for="@Model.Payment" asp-items="Html.GetEnumSelectList<PaymentType>()"></select>
+            </div>
+        </div>
     </div>
+</div>
+<div>
+    <a class="btn btn-primary disabled">Process Checkout</a>
 </div>
