@@ -59,7 +59,10 @@ namespace PersonalStoreApplication.Controllers
         [CustomAuthorization(LogoutRequired = false)]
         public IActionResult Cart()
         {
-            return View(pbs.GetUsersCart((int)HttpContext.Session.GetInt32("userId")));
+            //get user id
+            int id = (int)HttpContext.Session.GetInt32("userId");
+
+            return View("Cart", pbs.GetUsersCart(id));
         }
 
         [CustomAuthorization(LogoutRequired = false)]

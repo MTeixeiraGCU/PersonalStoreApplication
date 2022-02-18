@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PersonalStoreApplication.BusinessServices;
+using PersonalStoreApplication.Models;
+using System.Collections.Generic;
 
 namespace PersonalStoreApplication.Controllers
 {
@@ -16,14 +18,27 @@ namespace PersonalStoreApplication.Controllers
         [CustomAuthorization(LogoutRequired = false)]
         public IActionResult Index()
         {
-            
-            return View("Checkout", pbs.GetUsersCart((int)HttpContext.Session.GetInt32("userId")));
+            //get user id
+            int id = (int)HttpContext.Session.GetInt32("userId");
+
+            CheckoutModel model = new CheckoutModel();
+            model.CartList = pbs.GetUsersCart(id);
+            model.Addresses = new List<Address>();
+            model.Payment = PaymentType.Credit;
+
+            return View("Checkout", model);
         }
 
         [CustomAuthorization(LogoutRequired = false)]
-        public IActionResult Addresses()
+        public IActionResult SetCartAmount(int productId, int newAmount)
         {
-            return View("Addresses", null);
+            //get user id
+            int id = (int)HttpContext.Session.GetInt32("userId");
+
+            //update the cart
+            pbs.AddToCart(id, productId, newAmount, 0);
+
+            return View("Checkout", pbs.GetUsersCart(id));
         }
     }
 }
