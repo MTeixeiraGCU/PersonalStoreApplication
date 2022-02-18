@@ -1,12 +1,15 @@
 ﻿@model IEnumerable<PersonalStoreApplication.Models.CartItemDTO>
 
 @{
-    ViewData["Title"] = "Shopping Cart";
+    ViewData["Title"] = "Checkout";
 }
 
-<h1>Your Cart</h1>
+<h1>Checkout</h1>
 
-<table class="table">
+<div class="d-flex">
+
+    <div class="flex-fill p-2">
+        <table class="table">
     <thead>
         <tr>
             <th>
@@ -61,14 +64,9 @@
         }
     </tbody>
 </table>
-
-<p>
-    <a asp-controller="Checkout" asp-action="Index" class="btn btn-secondary">Checkout</a>
-</p>
-
-<script>
-    function updateQuantity(productId, amount) {
-        var url = "SetCartAmount?productId=" + productId + "&newAmount=" + amount;
-        window.location.replace(url);
-    }
-</script>
+    </div>
+    <div class="flex-fill p-2">
+        @Html.Partial("Addresses")
+        <button>New Address</button>
+    </div>
+</div>
