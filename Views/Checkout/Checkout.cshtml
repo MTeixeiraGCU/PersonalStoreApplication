@@ -19,7 +19,7 @@
                 <partial name="_addresses" model="Model.Addresses" />
             </div>
             <div class="p-2 pt-1">
-                <button>New Address</button>
+                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#newAddress">New Address</button>
             </div>
             <div class="p-2">
                 <label asp-for="@Model.Payment"></label>
@@ -30,4 +30,83 @@
 </div>
 <div>
     <a class="btn btn-primary disabled">Process Checkout</a>
+</div>
+
+<div class="modal" id="newAddress" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">New Address</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="newAddressForm" asp-controller="Checkout" asp-action="AddAddress">
+                    <div class="form-group row">
+                        <label class="control-label col-sm-2">Address Line One: </label>
+                        <div class="col-sm-8">
+                            <input type="text" name="AddressLineOne" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-2">Address Line Two: </label>
+                        <div class="col-sm-8">
+                            <input type="text" name="AddressLineTwo" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-2">City: </label>
+                        <div class="col-sm-8">
+                            <input type="text" name="City" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-2">State: </label>
+                        <div class="col-sm-8">
+                            <input type="text" name="State" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-2">Postal Code: </label>
+                        <div class="col-sm-8">
+                            <input type="text" name="Zip" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-2">Phone Number: </label>
+                        <div class="col-sm-8">
+                            <input type="text" name="PhoneNumber" class="form-control" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" form="newAddressForm" class="btn btn-primary">Add Address</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="paymentOptions" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Credit Card Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                </form>
+                <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Add Address</button>
+            </div>
+        </div>
+    </div>
 </div>

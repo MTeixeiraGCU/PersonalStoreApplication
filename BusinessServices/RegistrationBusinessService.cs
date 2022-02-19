@@ -1,4 +1,5 @@
-﻿using PersonalStoreApplication.DatabaseServices;
+﻿using PersonalStoreApplication.Controllers;
+using PersonalStoreApplication.DatabaseServices;
 using PersonalStoreApplication.Models;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,27 @@ namespace PersonalStoreApplication.BusinessServices
             if (userDAO.GetIdFromEmail(email) == -1)
                 return true;
             return false;
+        }
+
+        /// <summary>
+        /// This method attempts to add an address to the given users profile
+        /// </summary>
+        /// <param name="userId">the user profile id to attach the address to.</param>
+        /// <param name="address">the address object to add.</param>
+        /// <returns>true if the address was added to the system.</returns>
+        public bool AddAddress(int userId, Address address)
+        {
+            return userDAO.AddAddress(userId, address);
+        }
+
+        /// <summary>
+        /// This method gets all the listed addresses for the given user.
+        /// </summary>
+        /// <param name="userId">the user profile id to search addresses for.</param>
+        /// <returns>The list of found addresses.</returns>
+        public List<Address> GetAddresses(int userId)
+        {
+            return userDAO.GetAddresses(userId);
         }
     }
 }

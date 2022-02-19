@@ -123,5 +123,85 @@ namespace PersonalStoreApplication.DatabaseServices
 
             return results;
         }
+
+        public bool AddAddress(int userId, Address address)
+        {
+            bool results = false;
+
+            string query = "INSERT INTO addresses (USERID, ADDRESSONE, ADDRESSTWO, CITY, STATE, ZIP, PHONENUMBER) VALUES (@userId, @addressOne, @addressTwo, @city, @state, @zip, @phoneNumber)";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.Add("@userId", System.Data.SqlDbType.NVarChar, 40).Value = userId;
+                command.Parameters.Add("@addressOne", System.Data.SqlDbType.NVarChar, 40).Value = address.AddressLineOne;
+                command.Parameters.Add("@addressTwo", System.Data.SqlDbType.NVarChar, 40).Value = address.AddressLineTwo;
+                command.Parameters.Add("@city", System.Data.SqlDbType.NVarChar, 40).Value = address.City;
+                command.Parameters.Add("@state", System.Data.SqlDbType.NVarChar, 40).Value = address.State;
+                command.Parameters.Add("@zip", System.Data.SqlDbType.NVarChar, 40).Value = address.Zip;
+                command.Parameters.Add("@phoneNumber", System.Data.SqlDbType.NVarChar, 40).Value = address.PhoneNumber;
+
+                try
+                {
+                    connection.Open();
+                    int affectedRows = command.ExecuteNonQuery();
+
+                    if (affectedRows > 0)
+                    {
+                        results = true;
+                    }
+
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+            return results;
+        }
+
+        public List<Address> GetAddresses(int userId)
+        {
+            List<Address> addresses = new List<Address>();
+
+            string query = "SELECT * FROM addresses WHERE USERID = @userId";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.Add("@userId", System.Data.SqlDbType.NVarChar, 40).Value = userId;
+
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Address address = new Address();
+                        address.AddressLineOne = (string)reader["ADDRESSONE"];
+                        address.AddressLineTwo = (string)reader["ADDRESSTWO"];
+                        address.City = (string)reader["CITY"];
+                        address.State = (string)reader["STATE"];
+                        address.Zip = (string)reader["ZIP"];
+                        address.PhoneNumber = (string)reader["PHONENUMBER"];
+
+                        addresses.Add(address);
+                    }
+
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                };
+            }
+
+            return addresses;
+        }
     }
 }

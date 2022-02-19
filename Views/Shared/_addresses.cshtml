@@ -2,6 +2,13 @@
 <div class="list-group box-shadow">
     @foreach (var item in Model)
         {
-            <button type="button" class="list-group-item list-group-item-action">@item.AddressLineOne</button>
+            <button type="button" onclick="switchAddress()" class="list-group-item list-group-item-action">@item.AddressLineOne</button>
         }
 </div>
+
+<script>
+    function switchAddress() {
+        $(':button.active').removeClass('active');
+        $(this).addClass('active');
+    }
+</script>
