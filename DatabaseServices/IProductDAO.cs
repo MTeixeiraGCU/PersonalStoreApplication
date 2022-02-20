@@ -47,6 +47,12 @@ namespace PersonalStoreApplication.DatabaseServices
         /// <returns>True if the item was added, false otherwise.</returns>
         public bool UpdateCart(int userId, int productId, int quantity);
 
+        /// <summary>
+        /// This method removes a product from the user's cart.
+        /// </summary>
+        /// <param name="userId">The user id for the cart to update.</param>
+        /// <param name="productId">The product id of the item to remove from their cart.</param>
+        /// <returns>true if the product was removed, false otherwise.</returns>
         public bool DeleteFromCart(int userId, int productId);
     }
 }

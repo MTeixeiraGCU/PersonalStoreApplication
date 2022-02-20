@@ -6,8 +6,12 @@ using System.Collections.Generic;
 
 namespace PersonalStoreApplication.Controllers
 {
+    /// <summary>
+    /// This class controller handles routing throughout the checkout process.
+    /// </summary>
     public class CheckoutController : Controller
     {
+        //Injected business services.
         ProductBusinessService pbs;
         RegistrationBusinessService rbs;
 
@@ -17,6 +21,10 @@ namespace PersonalStoreApplication.Controllers
             this.rbs = rbs;
         }
 
+        /// <summary>
+        /// This method gets all of the user's information and routes to the initial checkout page.
+        /// </summary>
+        /// <returns>A view of the initial checkout page.</returns>
         [CustomAuthorization(LogoutRequired = false)]
         public IActionResult Index()
         {
@@ -31,6 +39,12 @@ namespace PersonalStoreApplication.Controllers
             return View("Checkout", model);
         }
 
+        /// <summary>
+        /// This method sets a product quantity in the user's cart.
+        /// </summary>
+        /// <param name="productId">The product id of the item to set the quantity for.</param>
+        /// <param name="newAmount">The new quantity of the item.</param>
+        /// <returns>A view of the updated checkout page.</returns>
         [CustomAuthorization(LogoutRequired = false)]
         public IActionResult SetCartAmount(int productId, int newAmount)
         {
@@ -43,6 +57,11 @@ namespace PersonalStoreApplication.Controllers
             return View("Checkout", pbs.GetUsersCart(id));
         }
 
+        /// <summary>
+        /// This method adds and address to the user's list of usable addresses.
+        /// </summary>
+        /// <param name="address">The address to add to the user's list.</param>
+        /// <returns>A view of the updated checkout page with the newly added address.</returns>
         [CustomAuthorization(LogoutRequired = false)]
         public IActionResult AddAddress(Address address)
         {

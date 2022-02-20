@@ -11,10 +11,19 @@ namespace PersonalStoreApplication.Models
     /// </summary>
     public class Address
     {
+        //First line of the user's address.
         public string AddressLineOne { get; set; }
+
+        //Second line (optional) of the user's address.
         public string AddressLineTwo { get; set; }
+
+        //City of the user's mailing address.
         public string City { get; set; }
+
+        //State of the user's mailing address.
         public string State { get; set; }
+
+        //Postal code for the user's mailing address.
         public string Zip { get; set; }
 
         //user's phone number (initially optional)

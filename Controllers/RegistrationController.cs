@@ -56,7 +56,7 @@ namespace PersonalStoreApplication.Controllers
                 return View("Register", user);
             }
 
-            //register user
+            //register the user
             if (rbs.RegisterUser(user))
             {
                 return View("RegistrationSuccess", user);

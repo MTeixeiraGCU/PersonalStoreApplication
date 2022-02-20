@@ -65,6 +65,12 @@ namespace PersonalStoreApplication.Controllers
             return View("Cart", pbs.GetUsersCart(id));
         }
 
+        /// <summary>
+        /// This method routes access for adding a single item to a users cart.
+        /// </summary>
+        /// <param name="productId">The id of the product to add into the cart</param>
+        /// <param name="current">The current quantity of that product type in the cart.</param>
+        /// <returns>A view of the user's updated cart.</returns>
         [CustomAuthorization(LogoutRequired = false)]
         public IActionResult AddProductToCart(int productId, int current)
         {
@@ -77,6 +83,12 @@ namespace PersonalStoreApplication.Controllers
             return View("Cart", pbs.GetUsersCart(id));
         }
 
+        /// <summary>
+        /// This method routes access for removing a single product from the users cart.
+        /// </summary>
+        /// <param name="productId">The id of the product to remove from the cart.</param>
+        /// <param name="current">The current quantity of that item in the user's cart.</param>
+        /// <returns>A view of the user's updated cart.</returns>
         [CustomAuthorization(LogoutRequired = false)]
         public IActionResult RemoveProductFromCart(int productId, int current)
         {
@@ -89,6 +101,12 @@ namespace PersonalStoreApplication.Controllers
             return View("Cart", pbs.GetUsersCart(id));
         }
 
+        /// <summary>
+        /// This method handles routing for setting the exact amount of items of a particular product in the user's cart.
+        /// </summary>
+        /// <param name="productId">The product id of the item to set a quantity for.</param>
+        /// <param name="newAmount">The amount of the product to add to the cart.</param>
+        /// <returns>A view of the user's updated cart.</returns>
         [CustomAuthorization(LogoutRequired = false)]
         public IActionResult SetCartAmount(int productId, int newAmount)
         {
