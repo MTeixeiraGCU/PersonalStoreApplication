@@ -71,6 +71,7 @@ namespace PersonalStoreApplication.DatabaseServices
                     {
                         user = new User();
                         user.Id = id;
+                        user.Role = (UserRole)reader["ROLE"];
                         user.Email = (string)reader["EMAIL"];
                         user.Password = (string)reader["PASSWORD"];
                         user.FirstName = (string)reader["FIRSTNAME"];

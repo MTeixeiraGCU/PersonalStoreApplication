@@ -14,6 +14,8 @@ namespace PersonalStoreApplication.Models
         //The uniques Id for this user
         public int Id { get; set; }
 
+        public UserRole Role { get; set; }
+
         //The user's First Name
         [Required]
         [StringLength(30, MinimumLength = 3)]
@@ -43,6 +45,7 @@ namespace PersonalStoreApplication.Models
         public User(int id, string firstName, string lastName, string email, string password, Address address)
         {
             Id = id;
+            Role = UserRole.RegularUser;
             FirstName = firstName;
             LastName = lastName;
             Email = email;
@@ -54,5 +57,11 @@ namespace PersonalStoreApplication.Models
         {
             return "Id: " + Id + ", Email: " + Email + " Name: " + FirstName + " " + LastName;
         }
+    }
+
+    public enum UserRole
+    {
+        RegularUser = 0,
+        Administrator = 1
     }
 }
