@@ -48,5 +48,14 @@ namespace PersonalStoreApplication.BusinessServices
         {
             return userDAO.Get(id);
         }
+
+        /// <summary>
+        /// This method gets the complete list of users from the database.
+        /// </summary>
+        /// <returns>A list of all registeres users.</returns>
+        public List<User> GetAllUsers()
+        {
+            return userDAO.GetAll();
+        }
     }
 }

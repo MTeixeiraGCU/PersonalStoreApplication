@@ -26,6 +26,12 @@ namespace PersonalStoreApplication.DatabaseServices
         public User Get(int id);
 
         /// <summary>
+        /// The method gets all of the registered users in the applications persistence layer.
+        /// </summary>
+        /// <returns>A complied list of all registered users.</returns>
+        public List<User> GetAll();
+
+        /// <summary>
         /// This method adds a user to the database.
         /// </summary>
         /// <param name="user">The user object with the information to add.</param>

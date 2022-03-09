@@ -58,6 +58,7 @@ namespace PersonalStoreApplication.Controllers
                 //setup session variables
                 HttpContext.Session.SetInt32("userId", user.Id);
                 HttpContext.Session.SetString("userName", user.FirstName);
+                HttpContext.Session.SetInt32("userRole", (int)user.Role);
 
                 return View("LoginSuccess", user);
             }
@@ -74,8 +75,9 @@ namespace PersonalStoreApplication.Controllers
         /// </summary>
         /// <returns>A view to the logout page view</returns>
         [CustomAuthorization(LogoutRequired = false)]
-        public IActionResult Logout()
+        public IActionResult Logout(string message = "")
         {
+            ViewBag.Message = message;
             return View();
         }
 

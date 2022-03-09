@@ -204,5 +204,44 @@ namespace PersonalStoreApplication.DatabaseServices
 
             return addresses;
         }
+
+        public List<User> GetAll()
+        {
+            List<User> users = new List<User>();
+
+            string query = "SELECT * FROM users";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        User user = new User();
+                        user.Id = (int)reader["ID"];
+                        user.Role = (UserRole)reader["ROLE"];
+                        user.Email = (string)reader["EMAIL"];
+                        user.Password = (string)reader["PASSWORD"];
+                        user.FirstName = (string)reader["FIRSTNAME"];
+                        user.LastName = (string)reader["LASTNAME"];
+
+                        users.Add(user);
+                    }
+
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                };
+            }
+
+            return users;
+        }
     }
 }
