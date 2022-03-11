@@ -11,11 +11,13 @@ namespace PersonalStoreApplication.Controllers
     {
         //Injected business services.
         ProductBusinessService pbs;
+        RegistrationBusinessService rbs;
         LoginBusinessService lbs;
 
-        public AdminController(ProductBusinessService pbs, LoginBusinessService lbs)
+        public AdminController(ProductBusinessService pbs, RegistrationBusinessService rbs, LoginBusinessService lbs)
         {
             this.pbs = pbs;
+            this.rbs = rbs;
             this.lbs = lbs;
         }
 
@@ -43,6 +45,13 @@ namespace PersonalStoreApplication.Controllers
         public IActionResult DeleteProduct(int productId)
         {
             //remove product here
+            return EditProducts();
+        }
+
+        [CustomAuthorization(AdminRequired = true)]
+        public IActionResult ProcessNewProduct(Models.Product product)
+        {
+            //add product here
             return EditProducts();
         }
 

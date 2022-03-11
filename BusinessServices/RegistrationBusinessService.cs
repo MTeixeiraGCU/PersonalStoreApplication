@@ -63,5 +63,15 @@ namespace PersonalStoreApplication.BusinessServices
         {
             return userDAO.GetAddresses(userId);
         }
+
+        /// <summary>
+        /// This method unregisters and removes a user from the persistence layer.
+        /// </summary>
+        /// <param name="id">The id of the user to remove.</param>
+        /// <returns>true if the user was removed, false otherwise.</returns>
+        public bool UnregisterUser(int id)
+        {
+            return userDAO.Delete(id);
+        }
     }
 }

@@ -243,5 +243,10 @@ namespace PersonalStoreApplication.DatabaseServices
 
             return users;
         }
+
+        public bool Delete(int id)
+        {
+            return true;
+        }
     }
 }

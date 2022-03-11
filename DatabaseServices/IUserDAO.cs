@@ -39,6 +39,13 @@ namespace PersonalStoreApplication.DatabaseServices
         public bool Add(User user);
 
         /// <summary>
+        /// This method removes a user from the database.
+        /// </summary>
+        /// <param name="id">The id of the user to remove from the database.</param>
+        /// <returns>true if the user was removed, false otherwise.</returns>
+        public bool Delete(int id);
+
+        /// <summary>
         /// This method adds an address to the given user.
         /// </summary>
         /// <param name="userId">The id of the user to add an address for.</param>

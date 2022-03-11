@@ -70,5 +70,25 @@ namespace PersonalStoreApplication.BusinessServices
                 return productDAO.DeleteFromCart(userId, productId);
             return productDAO.UpdateCart(userId, productId, quantity);
         }
+
+        /// <summary>
+        /// This method attempts to add a new product to the data layer.
+        /// </summary>
+        /// <param name="product">The product information to add to the database.</param>
+        /// <returns>true if the product was added, false otherwise.</returns>
+        public bool AddProduct(Product product)
+        {
+            return productDAO.AddProduct(product);
+        }
+
+        /// <summary>
+        /// This method queries the data layer to remove a product from the database.
+        /// </summary>
+        /// <param name="productId">The id of the product to remove.</param>
+        /// <returns>true if the product was removed, false otherwise.</returns>
+        public bool DeleteProduct(int productId)
+        {
+            return productDAO.DeleteProduct(productId);
+        }
     }
 }

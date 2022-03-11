@@ -54,5 +54,19 @@ namespace PersonalStoreApplication.DatabaseServices
         /// <param name="productId">The product id of the item to remove from their cart.</param>
         /// <returns>true if the product was removed, false otherwise.</returns>
         public bool DeleteFromCart(int userId, int productId);
+
+        /// <summary>
+        /// This method adds a product to the persistence layer
+        /// </summary>
+        /// <param name="product">Filled out product information to add to the database.</param>
+        /// <returns>true if the product was added, false otherwise.</returns>
+        public bool AddProduct(Product product);
+
+        /// <summary>
+        /// This method removes a product from the persistence layer.
+        /// </summary>
+        /// <param name="productId">The id of the product to remove from the database.</param>
+        /// <returns>true if the product was removed, false otherwise.</returns>
+        public bool DeleteProduct(int productId);
     }
 }

@@ -252,5 +252,15 @@ namespace PersonalStoreApplication.DatabaseServices
 
             return results;
         }
+
+        public bool AddProduct(Product product)
+        {
+            return true;
+        }
+
+        public bool DeleteProduct(int productId)
+        {
+            return true;
+        }
     }
 }
