@@ -260,7 +260,36 @@ namespace PersonalStoreApplication.DatabaseServices
 
         public bool DeleteProduct(int productId)
         {
-            return true;
+            bool results = false;
+
+            string query = "DELETE FROM products WHERE ID = @productId;";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.Add("@productId", System.Data.SqlDbType.Int).Value = productId;
+
+                try
+                {
+                    connection.Open();
+
+                    int affectedRows = command.ExecuteNonQuery();
+
+                    if (affectedRows > 0)
+                    {
+                        results = true;
+                    }
+
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                };
+            }
+
+            return results;
         }
     }
 }

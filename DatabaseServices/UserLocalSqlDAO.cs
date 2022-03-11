@@ -246,7 +246,36 @@ namespace PersonalStoreApplication.DatabaseServices
 
         public bool Delete(int id)
         {
-            return true;
+            bool results = false;
+
+            string query = "DELETE FROM users WHERE ID = @userId;";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.Add("@userId", System.Data.SqlDbType.Int).Value = userId;
+
+                try
+                {
+                    connection.Open();
+
+                    int affectedRows = command.ExecuteNonQuery();
+
+                    if (affectedRows > 0)
+                    {
+                        results = true;
+                    }
+
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                };
+            }
+
+            return results;
         }
     }
 }
