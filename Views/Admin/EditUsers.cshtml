@@ -52,9 +52,20 @@
                 @Html.DisplayFor(modelItem => item.Password)
             </td>
             <td>
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <button onclick="deleteUser(@item.Id)">Delete</button>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+<script>
+
+    function deleteUser(id) {
+        if(alert("Are you sure you would,like to delete this user?")) {
+            var url = "DeleteUser?id=" + id;
+            window.location.replace(url);
+        }
+    }
+
+</script>

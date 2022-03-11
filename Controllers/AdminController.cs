@@ -39,6 +39,13 @@ namespace PersonalStoreApplication.Controllers
             return View(pbs.GetAllProducts());
         }
 
+        [CustomAuthorization(AdminRequired = true)]
+        public IActionResult DeleteProduct(int productId)
+        {
+            //remove product here
+            return EditProducts();
+        }
+
         /// <summary>
         /// This method routes to user list editing.
         /// </summary>
@@ -47,6 +54,13 @@ namespace PersonalStoreApplication.Controllers
         public IActionResult EditUsers()
         {
             return View(lbs.GetAllUsers());
+        }
+
+        [CustomAuthorization(AdminRequired = true)]
+        public IActionResult DeleteUser(int id)
+        {
+            //remove user here
+            return EditUsers();
         }
     }
 }
