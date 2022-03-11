@@ -255,7 +255,39 @@ namespace PersonalStoreApplication.DatabaseServices
 
         public bool AddProduct(Product product)
         {
-            return true;
+            bool results = false;
+
+            string query = "INSERT INTO products (IMG, NAME, PRICE, DESCRIPTION, TAGS) VALUES (@img, @name, @price, @description, @tags)";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.Add("@name", System.Data.SqlDbType.NVarChar, 40).Value = product.Name;
+                command.Parameters.Add("@img", System.Data.SqlDbType.NVarChar, 40).Value = product.Img;
+                command.Parameters.Add("@price", System.Data.SqlDbType.Decimal, 10).Value = product.Price;
+                command.Parameters.Add("@description", System.Data.SqlDbType.NVarChar, 40).Value = product.Description;
+                command.Parameters.Add("@description", System.Data.SqlDbType.NVarChar, 40).Value = Product.TagsToString(product.Tags);
+
+                try
+                {
+                    connection.Open();
+                    int affectedRows = command.ExecuteNonQuery();
+
+                    if (affectedRows > 0)
+                    {
+                        results = true;
+                    }
+
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+            return results;
         }
 
         public bool DeleteProduct(int productId)

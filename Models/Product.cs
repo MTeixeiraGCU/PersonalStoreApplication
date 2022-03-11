@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace PersonalStoreApplication.Models
@@ -51,6 +52,17 @@ namespace PersonalStoreApplication.Models
         {
             var tagArray = tags.Split(',');
             return tagArray.ToList();
+        }
+
+        public static string TagsToString(List<string> tags)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach(string tag in tags)
+            {
+                sb.Append(tag + ",");
+            }
+            sb.Remove(sb.Length - 1, 1);
+            return sb.ToString();
         }
     }
 }
