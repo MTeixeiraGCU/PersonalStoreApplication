@@ -42,17 +42,17 @@ namespace PersonalStoreApplication.Controllers
         }
 
         [CustomAuthorization(AdminRequired = true)]
-        public IActionResult DeleteProduct(int productId)
+        public JsonResult DeleteProduct(int productId)
         {
             //remove product here
-            return EditProducts();
+            return Json(pbs.DeleteProduct(productId));
         }
 
         [CustomAuthorization(AdminRequired = true)]
-        public IActionResult ProcessNewProduct(Models.Product product)
+        public JsonResult ProcessNewProduct(Models.Product product)
         {
             //add product here
-            return EditProducts();
+            return Json(pbs.AddProduct(product));
         }
 
         /// <summary>
@@ -66,10 +66,10 @@ namespace PersonalStoreApplication.Controllers
         }
 
         [CustomAuthorization(AdminRequired = true)]
-        public IActionResult DeleteUser(int id)
+        public JsonResult DeleteUser(int id)
         {
             //remove user here
-            return EditUsers();
+            return Json(rbs.UnregisterUser(id));
         }
     }
 }

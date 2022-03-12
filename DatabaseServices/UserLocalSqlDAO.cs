@@ -254,7 +254,7 @@ namespace PersonalStoreApplication.DatabaseServices
             {
                 SqlCommand command = new SqlCommand(query, connection);
 
-                command.Parameters.Add("@userId", System.Data.SqlDbType.Int).Value = userId;
+                command.Parameters.Add("@userId", System.Data.SqlDbType.Int).Value = id;
 
                 try
                 {

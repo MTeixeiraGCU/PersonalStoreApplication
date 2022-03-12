@@ -62,9 +62,8 @@
 <script>
 
     function deleteUser(id) {
-        if(alert("Are you sure you would,like to delete this user?")) {
-            var url = "DeleteUser?id=" + id;
-            window.location.replace(url);
+        if(confirm("Are you sure you would,like to delete this user?")) {
+            let result = 
         }
     }
 

@@ -267,7 +267,7 @@ namespace PersonalStoreApplication.DatabaseServices
                 command.Parameters.Add("@img", System.Data.SqlDbType.NVarChar, 40).Value = product.Img;
                 command.Parameters.Add("@price", System.Data.SqlDbType.Decimal, 10).Value = product.Price;
                 command.Parameters.Add("@description", System.Data.SqlDbType.NVarChar, 40).Value = product.Description;
-                command.Parameters.Add("@description", System.Data.SqlDbType.NVarChar, 40).Value = Product.TagsToString(product.Tags);
+                command.Parameters.Add("@tags", System.Data.SqlDbType.NVarChar, 40).Value = Product.TagsToString(product.Tags);
 
                 try
                 {

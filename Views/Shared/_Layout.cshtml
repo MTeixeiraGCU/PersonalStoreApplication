@@ -76,7 +76,12 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - PersonalStoreApplication - <a asp-area="" asp-controller="Home" asp-action="About">About</a>
+            &copy; 2022 - PersonalStoreApplication - 
+            <a asp-area="" asp-controller="Home" asp-action="About">About</a>
+            @if (Context.Session.GetInt32("userRole") == 1)
+            {
+              <span>|</span>  <a asp-area="" asp-controller="Admin" asp-action="Index">Admin Panel</a>
+            }
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
