@@ -71,5 +71,11 @@ namespace PersonalStoreApplication.Controllers
             //remove user here
             return Json(rbs.UnregisterUser(id));
         }
+
+        [CustomAuthorization(AdminRequired = true)]
+        public JsonResult GetProductDetails(int productId)
+        {
+            return Json(pbs.GetProduct(productId));
+        }
     }
 }

@@ -30,6 +30,16 @@ namespace PersonalStoreApplication.BusinessServices
         }
 
         /// <summary>
+        /// This method finds a single product based on an id.
+        /// </summary>
+        /// <param name="productId">The given id to search for.</param>
+        /// <returns>A product that matches the given id.</returns>
+        public Product GetProduct(int productId)
+        {
+            return productDAO.Get(productId);
+        }
+
+        /// <summary>
         /// This method searches for matching products based on name and the given token.
         /// </summary>
         /// <param name="token">The token to search names in the persistence layer with.</param>
@@ -76,7 +86,7 @@ namespace PersonalStoreApplication.BusinessServices
         /// </summary>
         /// <param name="product">The product information to add to the database.</param>
         /// <returns>true if the product was added, false otherwise.</returns>
-        public bool AddProduct(Product product)
+        public int AddProduct(Product product)
         {
             return productDAO.AddProduct(product);
         }

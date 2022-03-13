@@ -60,7 +60,7 @@ namespace PersonalStoreApplication.DatabaseServices
         /// </summary>
         /// <param name="product">Filled out product information to add to the database.</param>
         /// <returns>true if the product was added, false otherwise.</returns>
-        public bool AddProduct(Product product);
+        public int AddProduct(Product product);
 
         /// <summary>
         /// This method removes a product from the persistence layer.

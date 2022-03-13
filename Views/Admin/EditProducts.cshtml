@@ -10,7 +10,7 @@
     <button class="btn btn-secondary" data-toggle="modal" data-target="#createProduct">Create New</button>
 </p>
 
-<table class="table">
+<table id="productTable" class="table">
     <thead>
         <tr>
             <th>
@@ -33,7 +33,7 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr id="product @item.Id">
+        <tr id="@item.Id">
             <td>
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
@@ -121,9 +121,10 @@
                 productId: productId
             },
             function(data) {
+                console.log(data);
                 if(data){
+                    $("#" + productId).remove();
                     alert("The product as been removed from the store!");
-                    $("#product " + productId).remove();
                 } else {
                     alert("There was a problem removing the product from the store.");
                 }
@@ -133,29 +134,55 @@
 
     function createNewProduct() {
         let formFields = $("#createNewProductForm").serialize();
-        /*formFields["Id"] = -1;
-
-        $("#createNewProductForm").find(":input").each(function() {
-            formFields[this.name] = $(this).val();
-        });*/
-        
+        let result = false;
         console.log(formFields);
-        alert(formFields);
 
         $.getJSON(
             'ProcessNewProduct',
             formFields,
             function(data) {
-                if(data){
+                console.log(data);
+                if(data >= 0){
                     alert("The product was added successfully!");
-                    //add to list here
+                    addProductToTable(data);
                 } else {
                     alert("There was a problem adding the product.");
                 }
             }
         );
 
-        $("#createProduct").hide();
+        $("#createProduct").modal("hide");
+    }
+
+    function addProductToTable(productId) {
+        $.getJSON(
+            'GetProductDetails',
+            {
+                productId : productId
+            },
+            function(data) {
+                console.log(data);
+
+                let table = document.getElementById("productTable");
+                let row = table.insertRow(-1);
+                row.setAttribute("id", data.id);
+
+                let cellId = row.insertCell(0);
+                let cellImg = row.insertCell(1);
+                let cellName = row.insertCell(2);
+                let cellPrice = row.insertCell(3);
+                let cellDescription = row.insertCell(4);
+                let cellButtons = row.insertCell(5);
+
+                cellId.innerHTML = data.id;
+                cellImg.innerHTML = data.img;
+                cellName.innerHTML = data.name;
+                cellPrice.innerHTML = data.price;
+                cellDescription.innerHTML = data.description;
+                cellButtons.innerHTML = "<button onclick='editProduct(" + data.id + ")' class='btn btn-secondary'>Edit</button> |" +
+                              "<button onclick='deleteProduct(" + data.id + ")' class='btn btn-secondary'>Delete</button>";
+            }
+        );
     }
 
 </script>

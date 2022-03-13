@@ -253,9 +253,9 @@ namespace PersonalStoreApplication.DatabaseServices
             return results;
         }
 
-        public bool AddProduct(Product product)
+        public int AddProduct(Product product)
         {
-            bool results = false;
+            int results = -1;
 
             string query = "INSERT INTO products (IMG, NAME, PRICE, DESCRIPTION, TAGS) VALUES (@img, @name, @price, @description, @tags)";
 
@@ -276,7 +276,8 @@ namespace PersonalStoreApplication.DatabaseServices
 
                     if (affectedRows > 0)
                     {
-                        results = true;
+                        command = new SqlCommand("SELECT MAX(ID) FROM products", connection);
+                        results = (int)command.ExecuteScalar();
                     }
 
                     connection.Close();
