@@ -172,6 +172,7 @@
 
 <script>
 
+    //This function attempts to query a product deletion from the controller.
     function deleteProduct(productId) {
         if(confirm("Are you sure you would like to delete this product?")) {
             $.getJSON(
@@ -182,6 +183,7 @@
             function(data) {
                 console.log(data);
                 if(data){
+                    //dynamically remove product from table on a successful removal from the system.
                     $("#" + productId).remove();
                     alert("The product as been removed from the store!");
                 } else {
@@ -191,6 +193,7 @@
         }
     }
 
+    //This function serializes the creation form information and sends it to the controller as a to be created product.
     function createNewProduct() {
         let formFields = $("#createNewProductForm").serialize();
         let result = false;
@@ -203,6 +206,8 @@
                 console.log(data);
                 if(data >= 0){
                     alert("The product was added successfully!");
+
+                    //add new product to the html table on successful creation.
                     addProductToTable(data);
                 } else {
                     alert("There was a problem adding the product.");
@@ -213,7 +218,10 @@
         $("#createProduct").modal("hide");
     }
 
+    //This function takes a product id and adds it to the html table.
     function addProductToTable(productId) {
+
+        //query the product info from the controller.
         $.getJSON(
             'GetProductDetails',
             {
@@ -222,10 +230,12 @@
             function(data) {
                 console.log(data);
 
+                //grab the table and create a new row
                 let table = document.getElementById("productTable");
                 let row = table.insertRow(-1);
                 row.setAttribute("id", data.id);
 
+                //insert information into each of the cells 
                 insertCellData(row, "Id", data.id);
                 insertCellData(row, "Img", data.img);
                 insertCellData(row, "Name", data.name);
@@ -237,12 +247,14 @@
         );
     }
 
+    //This function takes in a cells information and adds it to the given row.
     function insertCellData(row, id, data) {
         let cell = row.insertCell(-1);
         cell.setAttribute("id", id);
         cell.innerHTML = data;
     }
 
+    //This function populates the edit product form with the chosen product id.
     function editProduct(productId) {
         let editForm = $("#editProductForm");
 
@@ -254,6 +266,7 @@
             function(data) {
                 console.log(data);
 
+                //populate the form with the found information.
                 editForm.find('input[name="Id"]').val(data.id);
                 editForm.find('input[name="Img"]').val(data.img);
                 editForm.find('input[name="Name"]').val(data.name);
@@ -266,6 +279,7 @@
         );
     }
 
+    //This function updates a products information with the new data from the form. 
     function updateProduct() {
         let formFields = $("#editProductForm").serialize();
         let result = false;
@@ -277,6 +291,8 @@
             function(data) {
                 if(data){
                     alert("The product was successfully updated!");
+
+                    //update the product information on the html table.
                     updateProductOnTable($('#editProductForm').find('input[name="Id"]').val());
                 } else {
                     alert("There was a problem updating the product.");
@@ -287,6 +303,7 @@
         $("#editProduct").modal("hide");
     }
 
+    //This function updates a products information on the html table.
     function updateProductOnTable(productId) {
         let tableRow = $('#productTable').find('#' + productId);
 
@@ -298,6 +315,7 @@
             function(data) {
                 console.log(data);
 
+                //update each of the cells
                 tableRow.find('#Img').text(data.img);
                 tableRow.find('#Name').text(data.name);
                 tableRow.find('#Price').text(data.price);
