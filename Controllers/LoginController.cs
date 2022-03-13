@@ -95,6 +95,7 @@ namespace PersonalStoreApplication.Controllers
                 //remove session variables
                 HttpContext.Session.Remove("userId");
                 HttpContext.Session.Remove("userName");
+                HttpContext.Session.Remove("userRole");
             }
             return View("Login");
         }
