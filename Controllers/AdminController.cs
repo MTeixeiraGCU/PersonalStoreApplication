@@ -51,6 +51,11 @@ namespace PersonalStoreApplication.Controllers
             return Json(pbs.UpdateProduct(product));
         }
 
+        /// <summary>
+        /// This method deletes a product from the system.
+        /// </summary>
+        /// <param name="productId">The id of the product to remove from the database.</param>
+        /// <returns>A Json object containing a boolean value of the results.</returns>
         [CustomAuthorization(AdminRequired = true)]
         public JsonResult DeleteProduct(int productId)
         {
@@ -58,6 +63,11 @@ namespace PersonalStoreApplication.Controllers
             return Json(pbs.DeleteProduct(productId));
         }
 
+        /// <summary>
+        /// This method adds a product to the system.
+        /// </summary>
+        /// <param name="product">The product information to add to the database.</param>
+        /// <returns>A Json object containing the added products newly created id.</returns>
         [CustomAuthorization(AdminRequired = true)]
         public JsonResult ProcessNewProduct(Models.Product product)
         {
@@ -75,6 +85,11 @@ namespace PersonalStoreApplication.Controllers
             return View(lbs.GetAllUsers());
         }
 
+        /// <summary>
+        /// This method handles deleting a user from the system.
+        /// </summary>
+        /// <param name="id">The id of the user to delete.</param>
+        /// <returns>A Json object containing a boolean value of the results.</returns>
         [CustomAuthorization(AdminRequired = true)]
         public JsonResult DeleteUser(int id)
         {
@@ -82,6 +97,11 @@ namespace PersonalStoreApplication.Controllers
             return Json(rbs.UnregisterUser(id));
         }
 
+        /// <summary>
+        /// This method gets a specific products information.
+        /// </summary>
+        /// <param name="productId">The id to check the database with.</param>
+        /// <returns>The product information in Json form to help with dynamic loading.</returns>
         [CustomAuthorization(AdminRequired = true)]
         public JsonResult GetProductDetails(int productId)
         {
