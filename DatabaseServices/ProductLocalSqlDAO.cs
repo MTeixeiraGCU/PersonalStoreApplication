@@ -263,8 +263,8 @@ namespace PersonalStoreApplication.DatabaseServices
             {
                 SqlCommand command = new SqlCommand(query, connection);
 
-                command.Parameters.Add("@name", System.Data.SqlDbType.NVarChar, 40).Value = product.Name;
                 command.Parameters.Add("@img", System.Data.SqlDbType.NVarChar, 40).Value = product.Img;
+                command.Parameters.Add("@name", System.Data.SqlDbType.NVarChar, 40).Value = product.Name;
                 command.Parameters.Add("@price", System.Data.SqlDbType.Decimal, 10).Value = product.Price;
                 command.Parameters.Add("@description", System.Data.SqlDbType.NVarChar, 40).Value = product.Description;
                 command.Parameters.Add("@tags", System.Data.SqlDbType.NVarChar, 40).Value = Product.TagsToString(product.Tags);
@@ -302,6 +302,45 @@ namespace PersonalStoreApplication.DatabaseServices
                 SqlCommand command = new SqlCommand(query, connection);
 
                 command.Parameters.Add("@productId", System.Data.SqlDbType.Int).Value = productId;
+
+                try
+                {
+                    connection.Open();
+
+                    int affectedRows = command.ExecuteNonQuery();
+
+                    if (affectedRows > 0)
+                    {
+                        results = true;
+                    }
+
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                };
+            }
+
+            return results;
+        }
+
+        public bool Update(Product product)
+        {
+            bool results = false;
+
+            string query = "UPDATE products SET IMG = @img, NAME = @name, PRICE = @price, DESCRIPTION = @description, TAGS = @tags WHERE ID = @productId;";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                command.Parameters.Add("@productId", System.Data.SqlDbType.Int).Value = product.Id;
+                command.Parameters.Add("@img", System.Data.SqlDbType.NVarChar, 40).Value = product.Img;
+                command.Parameters.Add("@name", System.Data.SqlDbType.NVarChar, 40).Value = product.Name;
+                command.Parameters.Add("@price", System.Data.SqlDbType.Decimal, 10).Value = product.Price;
+                command.Parameters.Add("@description", System.Data.SqlDbType.NVarChar, 40).Value = product.Description;
+                command.Parameters.Add("@tags", System.Data.SqlDbType.NVarChar, 40).Value = Product.TagsToString(product.Tags);
 
                 try
                 {

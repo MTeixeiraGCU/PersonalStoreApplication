@@ -25,6 +25,13 @@ namespace PersonalStoreApplication.DatabaseServices
         public Product Get(int id);
 
         /// <summary>
+        /// This method updates the given product information in the database.
+        /// </summary>
+        /// <param name="product">The product information to use for the update.</param>
+        /// <returns>true if the product was updated, false otherwise.</returns>
+        public bool Update(Product product);
+
+        /// <summary>
         /// This method searches the persistence layer for the matching requirements given
         /// </summary>
         /// <param name="name">The name to search the database for.</param>

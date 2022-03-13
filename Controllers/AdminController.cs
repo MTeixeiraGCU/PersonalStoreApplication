@@ -41,6 +41,16 @@ namespace PersonalStoreApplication.Controllers
             return View(pbs.GetAllProducts());
         }
 
+        /// <summary>
+        /// This method routes to updating a product.
+        /// </summary>
+        /// <returns>Json object containing boolean value of results.</returns>
+        [CustomAuthorization(AdminRequired = true)]
+        public JsonResult UpdateProduct(Models.Product product)
+        {
+            return Json(pbs.UpdateProduct(product));
+        }
+
         [CustomAuthorization(AdminRequired = true)]
         public JsonResult DeleteProduct(int productId)
         {

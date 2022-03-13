@@ -62,7 +62,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Credit Card Information</h5>
+                <h5 class="modal-title">Create New Product</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -106,6 +106,65 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" onclick="createNewProduct()">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="editProduct" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Product</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editProductForm">
+                    <!-- Form Fields for a Product -->
+                    <div class="form-group row">
+                        <label class="control-label col-sm-2">ID: </label>
+                        <div class="col-sm-8">
+                            <input type="text" name="Id" class="form-control" readonly/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-2">Image: </label>
+                        <div class="col-sm-8">
+                            <input type="text" name="Img" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-2">Product Name: </label>
+                        <div class="col-sm-8">
+                            <input type="text" name="Name" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-2">Price: </label>
+                        <div class="col-sm-8">
+                            <input type="text" name="Price" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-3">Description: </label>
+                        <div class="col-sm-8">
+                            <input type="text" name="Description" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="control-label col-sm-2">Tags: </label>
+                        <div class="col-sm-8">
+                            <input type="text" name="Tags" class="form-control" />
+                        </div>
+                    </div>
+                </form>
+                <p><!-- form messages here --></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="updateProduct()">Update</button>
             </div>
         </div>
     </div>
@@ -183,6 +242,49 @@
                               "<button onclick='deleteProduct(" + data.id + ")' class='btn btn-secondary'>Delete</button>";
             }
         );
+    }
+
+    function editProduct(productId) {
+        let editForm = $("#editProductForm");
+
+        $.getJSON(
+            'GetProductDetails',
+            {
+                productId : productId
+            },
+            function(data) {
+                console.log(data);
+
+                editForm.find('input[name="Id"]').val(data.id);
+                editForm.find('input[name="Img"]').val(data.img);
+                editForm.find('input[name="Name"]').val(data.name);
+                editForm.find('input[name="Price"]').val(data.price);
+                editForm.find('input[name="Description"]').val(data.description);
+                editForm.find('input[name="Tags"]').val(data.tags);
+
+                $("#editProduct").modal("show");
+            }
+        );
+    }
+
+    function updateProduct() {
+        let formFields = $("#editProductForm").serialize();
+        let result = false;
+        console.log(formFields);
+
+        $.getJSON(
+            'UpdateProduct',
+            formFields,
+            function(data) {
+                if(data){
+                    alert("The product was successfully updated!");
+                } else {
+                    alert("There was a problem updating the product.");
+                }
+            }
+        );
+
+        $("#editProduct").modal("hide");
     }
 
 </script>

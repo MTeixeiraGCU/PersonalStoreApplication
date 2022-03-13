@@ -40,6 +40,16 @@ namespace PersonalStoreApplication.BusinessServices
         }
 
         /// <summary>
+        /// This method takes in a product and attempts to update it in the persistence layer.
+        /// </summary>
+        /// <param name="product">The product information to update.</param>
+        /// <returns>true if the product was updated, false otherwise.</returns>
+        public bool UpdateProduct(Product product)
+        {
+            return productDAO.Update(product);
+        }
+
+        /// <summary>
         /// This method searches for matching products based on name and the given token.
         /// </summary>
         /// <param name="token">The token to search names in the persistence layer with.</param>
