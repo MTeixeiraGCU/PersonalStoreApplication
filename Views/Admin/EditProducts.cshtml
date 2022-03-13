@@ -34,19 +34,19 @@
     <tbody>
 @foreach (var item in Model) {
         <tr id="@item.Id">
-            <td>
+            <td id="Id">
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
-            <td>
+            <td id="Img">
                 @Html.DisplayFor(modelItem => item.Img)
             </td>
-            <td>
+            <td id="Name">
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-            <td>
+            <td id="Price">
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
-            <td>
+            <td id="Description">
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
@@ -226,22 +226,21 @@
                 let row = table.insertRow(-1);
                 row.setAttribute("id", data.id);
 
-                let cellId = row.insertCell(0);
-                let cellImg = row.insertCell(1);
-                let cellName = row.insertCell(2);
-                let cellPrice = row.insertCell(3);
-                let cellDescription = row.insertCell(4);
-                let cellButtons = row.insertCell(5);
-
-                cellId.innerHTML = data.id;
-                cellImg.innerHTML = data.img;
-                cellName.innerHTML = data.name;
-                cellPrice.innerHTML = data.price;
-                cellDescription.innerHTML = data.description;
-                cellButtons.innerHTML = "<button onclick='editProduct(" + data.id + ")' class='btn btn-secondary'>Edit</button> |" +
-                              "<button onclick='deleteProduct(" + data.id + ")' class='btn btn-secondary'>Delete</button>";
+                insertCellData(row, "Id", data.id);
+                insertCellData(row, "Img", data.img);
+                insertCellData(row, "Name", data.name);
+                insertCellData(row, "Price", data.price.toFixed(2));
+                insertCellData(row, "Description", data.description);
+                insertCellData(row, "Buttons", "<button onclick='editProduct(" + data.id + ")' class='btn btn-secondary'>Edit</button> |" +
+                              "<button onclick='deleteProduct(" + data.id + ")' class='btn btn-secondary'>Delete</button>");
             }
         );
+    }
+
+    function insertCellData(row, id, data) {
+        let cell = row.insertCell(-1);
+        cell.setAttribute("id", id);
+        cell.innerHTML = data;
     }
 
     function editProduct(productId) {
@@ -258,7 +257,7 @@
                 editForm.find('input[name="Id"]').val(data.id);
                 editForm.find('input[name="Img"]').val(data.img);
                 editForm.find('input[name="Name"]').val(data.name);
-                editForm.find('input[name="Price"]').val(data.price);
+                editForm.find('input[name="Price"]').val(data.price.toFixed(2));
                 editForm.find('input[name="Description"]').val(data.description);
                 editForm.find('input[name="Tags"]').val(data.tags);
 
@@ -278,6 +277,7 @@
             function(data) {
                 if(data){
                     alert("The product was successfully updated!");
+                    updateProductOnTable($('#editProductForm').find('input[name="Id"]').val());
                 } else {
                     alert("There was a problem updating the product.");
                 }
@@ -285,6 +285,25 @@
         );
 
         $("#editProduct").modal("hide");
+    }
+
+    function updateProductOnTable(productId) {
+        let tableRow = $('#productTable').find('#' + productId);
+
+        $.getJSON(
+            'GetProductDetails',
+            {
+                productId : productId
+            },
+            function(data) {
+                console.log(data);
+
+                tableRow.find('#Img').text(data.img);
+                tableRow.find('#Name').text(data.name);
+                tableRow.find('#Price').text(data.price);
+                tableRow.find('#Description').text(data.description);
+            }
+        );
     }
 
 </script>
