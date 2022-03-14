@@ -45,7 +45,14 @@ namespace PersonalStoreApplication.Controllers
             //check for any remaining errors in the form
             if (ModelState["Email"].Errors.Any() && ModelState["Password"].Errors.Any())
             {
-                //return to the form with errors
+                //check login attempts
+                int attempts = ProcessLoginAttempts();
+                if (attempts == CustomAuthorizationAttribute.MAX_ATTEMPTS)
+                {
+                    return View("LockedOut");
+                }
+
+                //return with errors
                 return View("Login", new User());
             }
 
@@ -64,10 +71,40 @@ namespace PersonalStoreApplication.Controllers
             }
             else
             {
+                //check login attempts
+                int attempts = ProcessLoginAttempts();
+                if (attempts == CustomAuthorizationAttribute.MAX_ATTEMPTS)
+                {
+                    return View("LockedOut");
+                }
+
                 //return with errors
                 ModelState.AddModelError("", "Email and Password combination did not match.");
+
                 return View("Login", user);
             }
+        }
+
+        private int ProcessLoginAttempts()
+        {
+            //increment login attempts
+            int? attempts = HttpContext.Session.GetInt32("attemptStatus");
+            if (attempts == null)
+            {
+                attempts = 1;
+                HttpContext.Session.SetInt32("attemptStatus", (int)attempts);
+            }
+            else
+            {
+                attempts++;
+                HttpContext.Session.SetInt32("attemptStatus", (int)attempts);
+            }
+
+            ViewBag.Attempts = attempts;
+            ViewBag.MaxAttempts = CustomAuthorizationAttribute.MAX_ATTEMPTS;
+            ModelState.AddModelError("", "You have " + (CustomAuthorizationAttribute.MAX_ATTEMPTS - attempts) + " more login attempts before you are locked out.");
+
+            return (int)attempts;
         }
 
         /// <summary>
@@ -98,6 +135,15 @@ namespace PersonalStoreApplication.Controllers
                 HttpContext.Session.Remove("userRole");
             }
             return View("Login");
+        }
+
+        /// <summary>
+        /// This method routes to the locked out status page.
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult LockedOut()
+        {
+            return View("LockedOut");
         }
     }
 }
