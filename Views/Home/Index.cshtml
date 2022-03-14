@@ -27,15 +27,20 @@
                         //Every three cards need a new group
                         @if (counter % 3 == 0 && counter != 0)
                         {
-                        @:</div>
-                    @:</div>
-                    @:<div class="carousel-item">
-                        @:<div class="card-group">
+                                @:</div>
+                            @:</div>
+                            @:<div class="carousel-item">
+                                @:<div class="card-group">
                         }
 
                         <partial name="_productCard" model="item" />
 
                         //Increment the counter to keep groups of three
+                        counter++;
+                    }
+                    @while(counter % 3 != 0) // check for uneven carousel cards at the end of the list.
+                    {
+                        @:<div class="card"></div>
                         counter++;
                     }
                 </div>
