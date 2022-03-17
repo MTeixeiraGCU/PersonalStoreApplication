@@ -49,7 +49,7 @@ namespace PersonalStoreApplication.Controllers
         /// <returns>A view containing the loaded about page.</returns>
         public IActionResult About()
         {
-            Trace.WriteLine("About page was accessed!");
+            Trace.TraceInformation("About page was accessed!");
             return View();
         }
 
