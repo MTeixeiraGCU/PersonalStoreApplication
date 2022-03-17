@@ -38,7 +38,7 @@ namespace PersonalStoreApplication
             services.AddTransient<IUserDAO, UserLocalSqlDAO>();
             services.AddTransient<IProductDAO, ProductLocalSqlDAO>();
 #else
-            services.AddTransient<IuserDAO, UserMySqlDAO>();
+            services.AddTransient<IUserDAO, UserMySqlDAO>();
             services.AddTransient<IProductDAO, ProductMySqlDAO>();
 #endif
 
