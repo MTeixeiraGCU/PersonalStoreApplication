@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using PersonalStoreApplication.BusinessServices;
 using PersonalStoreApplication.DatabaseServices;
 using System;
@@ -41,6 +42,14 @@ namespace PersonalStoreApplication
             services.AddTransient<LoginBusinessService, LoginBusinessService>();
             services.AddTransient<RegistrationBusinessService, RegistrationBusinessService>();
             services.AddTransient<ProductBusinessService, ProductBusinessService>();
+
+            //add the following code
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.AddConsole();
+                loggingBuilder.AddDebug();
+                loggingBuilder.AddAzureWebAppDiagnostics();
+            });
 
         }
 
