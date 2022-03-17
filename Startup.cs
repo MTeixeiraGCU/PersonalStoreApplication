@@ -34,8 +34,13 @@ namespace PersonalStoreApplication
                 options.Cookie.IsEssential = true;
             });
 
+#if DEBUG
             services.AddTransient<IUserDAO, UserLocalSqlDAO>();
             services.AddTransient<IProductDAO, ProductLocalSqlDAO>();
+#else
+            services.AddTransient<IuserDAO, UserMySqlDAO>();
+            services.AddTransient<IProductDAO, ProductMySqlDAO>();
+#endif
 
             services.AddTransient<LoginBusinessService, LoginBusinessService>();
             services.AddTransient<RegistrationBusinessService, RegistrationBusinessService>();
