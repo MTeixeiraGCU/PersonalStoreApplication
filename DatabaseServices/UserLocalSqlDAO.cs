@@ -43,7 +43,7 @@ namespace PersonalStoreApplication.DatabaseServices
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    System.Diagnostics.Trace.WriteLine(ex.Message);
                 }
             }
 
@@ -82,7 +82,7 @@ namespace PersonalStoreApplication.DatabaseServices
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    System.Diagnostics.Trace.WriteLine(ex.Message);
                 };
             }
 
@@ -118,7 +118,7 @@ namespace PersonalStoreApplication.DatabaseServices
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    System.Diagnostics.Trace.WriteLine(ex.Message);
                 }
             }
 
@@ -157,7 +157,7 @@ namespace PersonalStoreApplication.DatabaseServices
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    System.Diagnostics.Trace.WriteLine(ex.Message);
                 }
             }
 
@@ -198,7 +198,7 @@ namespace PersonalStoreApplication.DatabaseServices
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    System.Diagnostics.Trace.WriteLine(ex.Message);
                 };
             }
 
@@ -237,7 +237,7 @@ namespace PersonalStoreApplication.DatabaseServices
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    System.Diagnostics.Trace.WriteLine(ex.Message);
                 };
             }
 
@@ -271,7 +271,7 @@ namespace PersonalStoreApplication.DatabaseServices
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    System.Diagnostics.Trace.WriteLine(ex.Message);
                 };
             }
 
