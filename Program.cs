@@ -21,6 +21,14 @@ namespace PersonalStoreApplication
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                })
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.AddConsole();
+#if DEBUG
+                    logging.AddDebug();
+#endif
                 });
     }
 }

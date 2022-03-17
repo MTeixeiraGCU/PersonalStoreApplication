@@ -16,12 +16,14 @@ namespace PersonalStoreApplication.Controllers
     /// </summary>
     public class HomeController : Controller
     {
+        private readonly ILogger _logger;
         //handles product logic and database queries
         private ProductBusinessService pbs;
 
-        public HomeController(ProductBusinessService productBusinessService)
+        public HomeController(ProductBusinessService productBusinessService, ILoggerFactory loggerFactory)
         {
             pbs = productBusinessService;
+            _logger = loggerFactory.CreateLogger<HomeController>();
         }
 
         /// <summary>
@@ -49,7 +51,7 @@ namespace PersonalStoreApplication.Controllers
         /// <returns>A view containing the loaded about page.</returns>
         public IActionResult About()
         {
-            Trace.TraceInformation("About page was accessed!");
+            _logger.LogInformation("About page was accessed!");
             return View();
         }
 
