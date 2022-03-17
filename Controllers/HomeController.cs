@@ -20,10 +20,10 @@ namespace PersonalStoreApplication.Controllers
         //handles product logic and database queries
         private ProductBusinessService pbs;
 
-        public HomeController(ProductBusinessService productBusinessService, ILoggerFactory loggerFactory)
+        public HomeController(ProductBusinessService productBusinessService, ILogger<HomeController> logger)
         {
             pbs = productBusinessService;
-            _logger = loggerFactory.CreateLogger<HomeController>();
+            _logger = logger;
         }
 
         /// <summary>

@@ -18,10 +18,6 @@ namespace PersonalStoreApplication
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                })
                 .ConfigureLogging(logging =>
                 {
                     logging.ClearProviders();
@@ -29,6 +25,10 @@ namespace PersonalStoreApplication
 #if DEBUG
                     logging.AddDebug();
 #endif
+                })
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
                 });
     }
 }
