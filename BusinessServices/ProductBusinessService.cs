@@ -69,15 +69,19 @@ namespace PersonalStoreApplication.BusinessServices
         /// </summary>
         /// <param name="token">The token to search names in the persistence layer with.</param>
         /// <returns>A list of any products whose name matches the given search token.</returns>
-        public List<Product> SearchForProducts(string token)
+        public List<Product> SearchForProducts(string token = "")
         {
-            if (token.Equals(string.Empty))
-                return productDAO.GetAll();
-
-            //process the search token
-            token = "%" + token + "%";
-
-            var products = productDAO.SearchProducts(token);
+            List<Product> products;
+            if (token == null || token.Equals(string.Empty))
+                products = productDAO.GetAll();
+            else
+            {
+                //process the search token
+                token = "%" + token + "%";
+                products = productDAO.SearchProducts(token);
+            }
+            //sort the list by name.
+            products.Sort((x, y) => x.Name.CompareTo(y.Name));
 
             foreach (var product in products)
             {
