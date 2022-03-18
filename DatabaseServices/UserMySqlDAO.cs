@@ -1,4 +1,5 @@
-﻿using MySqlConnector;
+﻿using Microsoft.Extensions.Logging;
+using MySqlConnector;
 using PersonalStoreApplication.Models;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,12 @@ namespace PersonalStoreApplication.DatabaseServices
                                                  ";database=" + database_schema + 
                                                  ";port=" + database_port;
 
+        private readonly ILogger _logger;
+
+        public UserMySqlDAO(ILogger<IUserDAO> logger)
+        {
+            _logger = logger;
+        }
 
         public int GetIdFromEmail(string email)
         {
@@ -55,7 +62,7 @@ namespace PersonalStoreApplication.DatabaseServices
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Trace.WriteLine(ex.Message);
+                    _logger.LogError(ex.Message);
                 }
             }
 
@@ -94,7 +101,7 @@ namespace PersonalStoreApplication.DatabaseServices
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Trace.WriteLine(ex.Message);
+                    _logger.LogError(ex.Message);
                 };
             }
 
@@ -130,7 +137,7 @@ namespace PersonalStoreApplication.DatabaseServices
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Trace.WriteLine(ex.Message);
+                    _logger.LogError(ex.Message);
                 }
             }
 
@@ -169,7 +176,7 @@ namespace PersonalStoreApplication.DatabaseServices
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Trace.WriteLine(ex.Message);
+                    _logger.LogError(ex.Message);
                 }
             }
 
@@ -210,7 +217,7 @@ namespace PersonalStoreApplication.DatabaseServices
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Trace.WriteLine(ex.Message);
+                    _logger.LogError(ex.Message);
                 };
             }
 
@@ -249,7 +256,7 @@ namespace PersonalStoreApplication.DatabaseServices
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Trace.WriteLine(ex.Message);
+                    _logger.LogError(ex.Message);
                 };
             }
 
@@ -283,7 +290,7 @@ namespace PersonalStoreApplication.DatabaseServices
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Trace.WriteLine(ex.Message);
+                    _logger.LogError(ex.Message);
                 };
             }
 
