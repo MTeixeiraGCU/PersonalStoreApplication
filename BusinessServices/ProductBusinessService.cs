@@ -1,4 +1,5 @@
-﻿using PersonalStoreApplication.DatabaseServices;
+﻿using Microsoft.Extensions.Logging;
+using PersonalStoreApplication.DatabaseServices;
 using PersonalStoreApplication.Models;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,12 @@ namespace PersonalStoreApplication.BusinessServices
         //handles database layer requests
         private IProductDAO productDAO;
 
-        public ProductBusinessService(IProductDAO productDAO)
+        private readonly ILogger _logger;
+
+        public ProductBusinessService(IProductDAO productDAO, ILogger<ProductBusinessService> logger)
         {
             this.productDAO = productDAO;
+            _logger = logger;
         }
 
         /// <summary>
@@ -26,7 +30,14 @@ namespace PersonalStoreApplication.BusinessServices
         /// <returns>A list compiled of all the products available.</returns>
         public List<Product> GetAllProducts()
         {
-            return productDAO.GetAll();
+            var products = productDAO.GetAll();
+
+            foreach(var product in products)
+            {
+                product.Img = findProductImage(product);
+            }
+
+            return products;
         }
 
         /// <summary>
@@ -36,7 +47,11 @@ namespace PersonalStoreApplication.BusinessServices
         /// <returns>A product that matches the given id.</returns>
         public Product GetProduct(int productId)
         {
-            return productDAO.Get(productId);
+            var product = productDAO.Get(productId);
+
+            product.Img = findProductImage(product);
+
+            return product;
         }
 
         /// <summary>
@@ -62,7 +77,14 @@ namespace PersonalStoreApplication.BusinessServices
             //process the search token
             token = "%" + token + "%";
 
-            return productDAO.SearchProducts(token);
+            var products = productDAO.SearchProducts(token);
+
+            foreach (var product in products)
+            {
+                product.Img = findProductImage(product);
+            }
+
+            return products;
         }
 
         /// <summary>
@@ -109,6 +131,18 @@ namespace PersonalStoreApplication.BusinessServices
         public bool DeleteProduct(int productId)
         {
             return productDAO.DeleteProduct(productId);
+        }
+
+        private string findProductImage(Product product)
+        {
+            if(System.IO.File.Exists("./wwwroot/img/" + product.Img))
+            {
+                return "/img/" + product.Img;
+            }
+
+            string link = "https://loremflickr.com/160/120/" + product.Name.Split(" ")[0] + "?lock=" + product.Id;
+
+            return link;
         }
     }
 }

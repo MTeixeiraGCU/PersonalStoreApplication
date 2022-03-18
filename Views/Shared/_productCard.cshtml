@@ -1,13 +1,8 @@
 ﻿@model PersonalStoreApplication.Models.Product
-@{ 
-    //Find the name of the product for auto images
-    var s = @Model.Name;
-    var firstWord = s.IndexOf(" ") > -1 ? s.Substring(0, s.IndexOf(" ")) : s;
-}
 
 <!-- Display the current product card -->
 <div id="card-number-@Model.Id" class="card">
-    <img src="https://loremflickr.com/160/120/@firstWord?lock=@Model.Id" class="card-img-top" alt="Card image cap" />
+    <img src="@Model.Img" class="card-img-top" alt="@Model.Name" />
     <div class="card-body">
         <h5 class="card-title">@Model.Name</h5>
         <p class="card-text">Cost: $@Html.DisplayFor(modelItem => Model.Price)</p>
