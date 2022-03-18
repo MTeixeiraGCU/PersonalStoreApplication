@@ -66,7 +66,7 @@ namespace PersonalStoreApplication.DatabaseServices
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex.Message);
+                    _logger.LogError(ex.Message +  " ___ " + connectionString);
                 };
             }
 
