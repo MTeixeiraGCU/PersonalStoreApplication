@@ -15,7 +15,7 @@ namespace PersonalStoreApplication.DatabaseServices
     {
         //Connection environment variables
         private static string database_server = Environment.GetEnvironmentVariable("DATABASE_SERVER_NAME");
-        private static string database_userId = Environment.GetEnvironmentVariable("DATABASE_USER_ID");
+        private static string database_userId = Environment.GetEnvironmentVariable("DATABASE_USER_NAME");
         private static string database_password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD");
         private static string database_schema = Environment.GetEnvironmentVariable("DATABASE_SCHEMA");
         private static string database_port = Environment.GetEnvironmentVariable("DATABASE_PORT");
