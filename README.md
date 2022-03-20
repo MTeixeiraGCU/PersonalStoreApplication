@@ -2,6 +2,7 @@
 
 Simple web application for purchasing clothing items.
 
+[Porject Documentation](https://github.com/MTeixeiraGCU/PersonalStoreApplication/blob/master/Documents/CST-452ProjectDesignDocument.docx)
 
 ## Azure Deployment
 
