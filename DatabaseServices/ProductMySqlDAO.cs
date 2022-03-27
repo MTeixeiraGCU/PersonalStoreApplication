@@ -201,9 +201,9 @@ namespace PersonalStoreApplication.DatabaseServices
         {
             bool results = false;
 
-            string query = "INSERT INTO carts(USERID, PRODUCTID, QUANTITY) VALUES(@userId, @productId, @quantity);" +
+            string query = "INSERT INTO carts(USERID, PRODUCTID, QUANTITY) VALUES(@userId, @productId, @quantity) " +
                            "ON DUPLICATE KEY " +
-                           "UPDATE QUANTITY = @quantity";
+                           "UPDATE QUANTITY = @quantity;";
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
